@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
 
     public event Action<Bullet> Died;
     public event Action<Bullet, Enemy> Hit;
+    public event Action<Enemy> HitTower;
 
     private void OnEnable()
     {
@@ -35,6 +36,7 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             Hit?.Invoke(this, enemy);
+            HitTower?.Invoke(enemy);
             Died?.Invoke(this);
         }
     }

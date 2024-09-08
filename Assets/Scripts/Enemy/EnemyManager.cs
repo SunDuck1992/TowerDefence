@@ -43,24 +43,22 @@ public class EnemyManager
 
     private void ActivateSlowEnemy()
     {
-        //TODO targetController
-
-        //for (int i = 0; i < _enemies.Count; i++)
-        //{
-        //    var enemy = _enemies[i] as Enemy;
-        //    enemy.ChangeSpeedModifyier(0.5f);
-        //}
+        for (int i = 0; i < _targetController.Enemies.Count; i++)
+        {
+            var enemy = _targetController.Enemies[i] as Enemy;
+            enemy.ChangeSpeedModifyier(0.5f);
+            enemy.Animator.SetFloat("Speed", 0.5f);
+        }
     }
 
     private void DeActivateSlowEnemy()
     {
-        //TODO TargetController
-
-        //for (int i = 0; i < _enemies.Count; i++)
-        //{
-        //    var enemy = _enemies[i] as Enemy;
-        //    enemy.ChangeSpeedModifyier(1f);
-        //}
+        for (int i = 0; i < _targetController.Enemies.Count; i++)
+        {
+            var enemy = _targetController.Enemies[i] as Enemy;
+            enemy.ChangeSpeedModifyier(1f);
+            enemy.Animator.SetFloat("Speed", 1f);
+        }
     }
 
     private void Destroy(GameUnit gameUnit)

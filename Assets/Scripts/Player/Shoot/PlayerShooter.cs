@@ -94,30 +94,6 @@ public class PlayerShooter : MonoBehaviour
 
                     _currentWeapon.Shoot(bullet);
                 }
-                //Bullet bullet = _bulletPool.Spawn();
-                //bullet.Hit += OnHit;
-                //bullet.Died += BulletComplete;
-
-                //_currentWeapon.Shoot(bullet);
-
-                //_weaponAnimator.SetTrigger("ShootRun");
-
-                //if (_weaponAnimator.GetBool("isRunning"))
-                //{
-                //    _weaponAnimator.SetTrigger("ShootRun");
-                //}
-                //else
-                //{
-                //    _weaponAnimator.SetTrigger("ShootIdle");
-                //}
-
-                //Debug.Log(_weaponAnimator.GetBool("isRunning"));
-
-
-
-                //Vector3 direction = _target.transform.position - _currentWeapon.WeaponPoint.position;
-
-                //bullet.transform.forward = direction;
 
                 IsShooting = true;
 
@@ -155,8 +131,6 @@ public class PlayerShooter : MonoBehaviour
 
     private void OnHit(Bullet bullet, Enemy enemy)
     {
-        // var damage = bullet.Damage + _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value * bullet.Damage * 0.2f;
-
         if (_isMassiveDamage)
         {
             var enemies = _targetController.GetAllTargets(enemy, Radius, true);

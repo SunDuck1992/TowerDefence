@@ -5253,7 +5253,7 @@ MonoBehaviour:
   _transformTower: {fileID: 3134004678634519976}
   _shotPoint: {fileID: 45079907444250320}
   _damage: 1
-  _fireRate: 1
+  _fireRate: 0.5
   _shootDistance: 15
 --- !u!114 &4282684160171363880
 MonoBehaviour:

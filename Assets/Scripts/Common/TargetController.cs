@@ -7,6 +7,9 @@ public class TargetController
     private List<GameUnit> _enemies = new();
     private List<GameUnit> _towers = new();
 
+    public List<GameUnit> Enemies => _enemies;
+    public List<GameUnit> Towers => _towers;
+
     public void AddTarget(GameUnit gameUnit, bool isTower = false)
     {
         if (isTower)

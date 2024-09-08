@@ -5,20 +5,22 @@ public abstract class BasePool<T>
     where T : MonoBehaviour
 {
     private readonly T _prefab;
-    private Queue<T> _storage = new Queue<T>();
+    private Queue<T> _storage;/* = new Queue<T>();*/
 
     public BasePool(T prefab)
     {
         _prefab = prefab;
+        _storage = new Queue<T>();
     }
 
     public T Spawn()
     {
         Debug.Log("Pool ID" + GetHashCode());
         T item = null;
+
         if (_storage.Count > 0)
         {
-            item = _storage.Dequeue();      
+            item = _storage.Dequeue();
         }
         else
         {

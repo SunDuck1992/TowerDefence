@@ -5,17 +5,16 @@ using UnityEngine;
 
 public class TowerBuildArea : MonoBehaviour
 {
-    public event Action GoldDelivered;
-    public event Action<int, int> GoldDelivering;
-    public event Action<bool> IsDelivering;
-
     [SerializeField] private int _goldToDelive;
     [SerializeField] private int _minimumGoldToDelive;
     [SerializeField] private TMP_Text _goldText;
 
+    public event Action GoldDelivered;
+    public event Action<int, int> GoldDelivering;
+    public event Action<bool> IsDelivering;
+
     private int _currentGoldToDelive;
     private bool _isDelivering;
-    private Coroutine _delive;
     private float _deliveringDelay = 1f;
     private float _deliveringInterval = 0.1f;
 
@@ -36,7 +35,7 @@ public class TowerBuildArea : MonoBehaviour
         {
             _isDelivering = true;
             IsDelivering?.Invoke(_isDelivering);
-            _delive = StartCoroutine(Delive(player));
+            StartCoroutine(Delive(player));
         }
     }
 

@@ -28,7 +28,7 @@ public class BuildScreen : MonoBehaviour
     {
         int costTower = _buildTowerSystem.TowerSettings.Datas[id].Cost;
 
-        _buildTowerSystem.BuildTower(_buildTowerSystem.TowerSettings.Datas[id].Prefab);
+        //_buildTowerSystem.BuildTower(_buildTowerSystem.TowerSettings.Datas[id].Prefab);
 
         if (_playerWallet.TrySpendGold(costTower))
         {
