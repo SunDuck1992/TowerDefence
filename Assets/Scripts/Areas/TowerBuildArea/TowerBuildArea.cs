@@ -35,7 +35,7 @@ public class TowerBuildArea : MonoBehaviour
         {
             _isDelivering = true;
             IsDelivering?.Invoke(_isDelivering);
-            StartCoroutine(Delive(player));
+            //StartCoroutine(Delive(player));
         }
     }
 
@@ -48,30 +48,30 @@ public class TowerBuildArea : MonoBehaviour
         }
     }
 
-    private IEnumerator Delive(Player player)
-    {
-        var deliveringDelay = new WaitForSeconds(_deliveringDelay);
+    //private IEnumerator Delive(Player player)
+    //{
+    //    var deliveringDelay = new WaitForSeconds(_deliveringDelay);
 
-        yield return deliveringDelay;
+    //    yield return deliveringDelay;
 
-        var deliveringInterval = new WaitForSeconds(_deliveringInterval);
+    //    var deliveringInterval = new WaitForSeconds(_deliveringInterval);
 
-        while (_isDelivering)
-        {
-            if (_currentGoldToDelive - _minimumGoldToDelive >= 0 && player.TrySpendGold(_minimumGoldToDelive))
-            {
-                _currentGoldToDelive -= _minimumGoldToDelive;
-                _goldText.text = _currentGoldToDelive.ToString();
+    //    while (_isDelivering)
+    //    {
+    //        if (_currentGoldToDelive - _minimumGoldToDelive >= 0 && player.TrySpendGold(_minimumGoldToDelive))
+    //        {
+    //            _currentGoldToDelive -= _minimumGoldToDelive;
+    //            _goldText.text = _currentGoldToDelive.ToString();
 
-                GoldDelivering?.Invoke(_currentGoldToDelive, _goldToDelive);
-            }
+    //            GoldDelivering?.Invoke(_currentGoldToDelive, _goldToDelive);
+    //        }
 
-            if (_currentGoldToDelive <= 0)
-            {
-                GoldDelivered?.Invoke();
-            }
+    //        if (_currentGoldToDelive <= 0)
+    //        {
+    //            GoldDelivered?.Invoke();
+    //        }
 
-            yield return deliveringInterval;
-        }
-    }
+    //        yield return deliveringInterval;
+    //    }
+    //}
 }
