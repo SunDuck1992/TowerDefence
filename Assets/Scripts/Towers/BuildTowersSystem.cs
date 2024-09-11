@@ -9,8 +9,9 @@ public class BuildTowersSystem
     private BuildArea _currentBuildArea;
     private TargetController _targetController;
     private BulletPool _bulletPool;
+    private UISettings _uiSettings;
 
-    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool)
+    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings)
     {
         for (int i = 0; i < sceneSettings.BuildPoints.Count; i++)
         {
@@ -20,6 +21,10 @@ public class BuildTowersSystem
         TowerSettings = towerSettings;
         _targetController = targetController;
         _bulletPool = bulletPool;
+        _uiSettings = uiSettings;
+
+        _uiSettings.RepairTowersButton.EnableBonus.AddListener(RepairTowers);
+        _uiSettings.RepairTowersButton.DisableBonus.AddListener(RepairTowers);
     }
 
     public TowerSettings TowerSettings { get; }
@@ -52,5 +57,17 @@ public class BuildTowersSystem
         tower.Enable();
         _currentBuildArea.OnBuild = true;
         _targetController.AddTarget(tower, true);
+    }
+
+    private void RepairTowers()
+    {
+        for (int i = 0; i < _targetController.Towers.Count; i++)
+        {
+            var tower = _targetController.Towers[i];
+
+            Debug.Log(tower.Health + " - Towere here");
+
+            tower.ResetHealth();
+        }
     }
 }

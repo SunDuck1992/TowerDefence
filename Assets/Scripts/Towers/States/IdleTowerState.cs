@@ -20,7 +20,6 @@ public class IdleTowerState : BaseState<Tower>
             Owner.TransformTower.eulerAngles = rotation;
 
             float angle = Vector3.Angle(Owner.TransformTower.forward, direction.normalized);
-            Debug.Log(angle);
 
             if(angle <= 5f)
             {
