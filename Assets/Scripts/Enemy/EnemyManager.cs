@@ -4,21 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class EnemyManager 
+public class EnemyManager
 {
     private readonly EnemyPool _enemyPool;
     private readonly SceneSettings _sceneSettings;
     private readonly UISettings _uiSettings;
     private readonly TargetController _targetController;
+    private readonly PlayerWallet _playerWallet;
 
     public event Action EnemyDied;
 
-    public EnemyManager(EnemyPool enemyPool, SceneSettings sceneSettings, UISettings uISettings, TargetController targetController)
+    public EnemyManager(EnemyPool enemyPool, SceneSettings sceneSettings, UISettings uISettings, TargetController targetController, PlayerWallet playerWallet)
     {
         _enemyPool = enemyPool;
         _sceneSettings = sceneSettings;
         _uiSettings = uISettings;
         _targetController = targetController;
+        _playerWallet = playerWallet;
 
         _uiSettings.SlowEnemyButton.EnableBonus.AddListener(ActivateSlowEnemy);
         _uiSettings.SlowEnemyButton.DisableBonus.AddListener(DeActivateSlowEnemy);
@@ -38,20 +40,26 @@ public class EnemyManager
         enemy.Enable();
         enemy.DiedComplete.AddListener(Destroy);
 
-        Debug.Log("ID" + enemy.GetHashCode());
+        //Debug.Log("ID" + enemy.GetHashCode());
     }
 
-    private void ActivateSlowEnemy()
+    private void ActivateSlowEnemy(int cost)
     {
-        for (int i = 0; i < _targetController.Enemies.Count; i++)
+        //Debug.Log(cost + " - Action value");
+        //Debug.Log(_playerWallet.TrySpendGem(cost));
+
+        if (_playerWallet.TrySpendGem(cost))
         {
-            var enemy = _targetController.Enemies[i] as Enemy;
-            enemy.ChangeSpeedModifyier(0.5f);
-            enemy.Animator.SetFloat("Speed", 0.5f);
+            for (int i = 0; i < _targetController.Enemies.Count; i++)
+            {
+                var enemy = _targetController.Enemies[i] as Enemy;
+                enemy.ChangeSpeedModifyier(0.5f);
+                enemy.Animator.SetFloat("Speed", 0.5f);
+            }
         }
     }
 
-    private void DeActivateSlowEnemy()
+    private void DeActivateSlowEnemy(int cost)
     {
         for (int i = 0; i < _targetController.Enemies.Count; i++)
         {

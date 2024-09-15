@@ -52,7 +52,6 @@ public class Enemy : GameUnit, IStateMachineOwner
 
     public void ChangeSpeedModifyier(float value)
     {
-        Debug.Log(value);
         _agent.speed = value * _speed;
     }
 }

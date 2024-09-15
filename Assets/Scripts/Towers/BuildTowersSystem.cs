@@ -10,8 +10,9 @@ public class BuildTowersSystem
     private TargetController _targetController;
     private BulletPool _bulletPool;
     private UISettings _uiSettings;
+    private PlayerWallet _playerWallet;
 
-    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings)
+    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet)
     {
         for (int i = 0; i < sceneSettings.BuildPoints.Count; i++)
         {
@@ -25,6 +26,7 @@ public class BuildTowersSystem
 
         _uiSettings.RepairTowersButton.EnableBonus.AddListener(RepairTowers);
         _uiSettings.RepairTowersButton.DisableBonus.AddListener(RepairTowers);
+        _playerWallet = playerWallet;
     }
 
     public TowerSettings TowerSettings { get; }
@@ -59,15 +61,18 @@ public class BuildTowersSystem
         _targetController.AddTarget(tower, true);
     }
 
-    private void RepairTowers()
+    private void RepairTowers(int cost)
     {
-        for (int i = 0; i < _targetController.Towers.Count; i++)
+        if (_playerWallet.TrySpendGem(cost))
         {
-            var tower = _targetController.Towers[i];
+            for (int i = 0; i < _targetController.Towers.Count; i++)
+            {
+                var tower = _targetController.Towers[i];
 
-            Debug.Log(tower.Health + " - Towere here");
+                Debug.Log(tower.Health + " - Towere here");
 
-            tower.ResetHealth();
+                tower.ResetHealth();
+            }
         }
     }
 }

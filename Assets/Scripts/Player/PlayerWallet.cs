@@ -19,6 +19,7 @@ public class PlayerWallet
     public int Gem => _gem;
 
     public event Action GoldChanged;
+    public event Action GemChanged;
 
     public void AddGold(int gold)
     {
@@ -31,12 +32,22 @@ public class PlayerWallet
 
     public bool TrySpendGold(int gold)
     {
-        //return true; // временное решение
-
         if (gold > 0 & _gold - gold >= 0)
         {
             _gold -= gold;
             GoldChanged?.Invoke();
+
+            return true;
+        }
+        return false;
+    }
+
+    public bool TrySpendGem(int gem)
+    {
+        if (gem > 0 & _gem - gem >= 0)
+        {
+            _gem -= gem;
+            GemChanged?.Invoke();
 
             return true;
         }

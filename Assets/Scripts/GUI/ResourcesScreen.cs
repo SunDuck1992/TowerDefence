@@ -18,6 +18,7 @@ public class ResourcesScreen : MonoBehaviour
     { 
         _playerWallet = playerWallet;
         _playerWallet.GoldChanged += UpdateResourcesScreen;
+        _playerWallet.GemChanged += UpdateResourcesScreen;
     }
 
     private void Start()
@@ -35,5 +36,6 @@ public class ResourcesScreen : MonoBehaviour
     private void OnDestroy()
     {
         _playerWallet.GoldChanged -= UpdateResourcesScreen;
+        _playerWallet.GemChanged -= UpdateResourcesScreen;
     }
 }

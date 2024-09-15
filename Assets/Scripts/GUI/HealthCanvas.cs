@@ -15,9 +15,6 @@ public class HealthCanvas : MonoBehaviour
         _slider.value = _gameUnit.Health;
         _slider.gameObject.SetActive(!_isHideble);
 
-        Debug.Log(_slider.value);
-        Debug.Log(_slider.maxValue);
-
         _gameUnit.HealthChanged += ChangeValue;
     }
 

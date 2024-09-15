@@ -6,9 +6,10 @@ using UnityEngine.Events;
 public class ActivateBonusButton : MonoBehaviour
 {
     [SerializeField] private float _duration;
+    [SerializeField] private int _cost;
 
-    public UnityEvent EnableBonus;
-    public UnityEvent DisableBonus;
+    public UnityEvent<int> EnableBonus;
+    public UnityEvent<int> DisableBonus;
 
     private bool _isButtonPressed = false;
 
@@ -21,7 +22,7 @@ public class ActivateBonusButton : MonoBehaviour
 
             StartCoroutine(StartTimer());
 
-            EnableBonus.Invoke();
+            EnableBonus.Invoke(_cost);
         }
     }
 
@@ -33,6 +34,6 @@ public class ActivateBonusButton : MonoBehaviour
         Debug.Log(_isButtonPressed);
         StopCoroutine(StartTimer());
 
-        DisableBonus.Invoke();
+        DisableBonus.Invoke(_cost);
     }
 }

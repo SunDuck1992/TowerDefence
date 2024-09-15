@@ -24,15 +24,17 @@ public class PlayerShooter : MonoBehaviour
     private Weapon _currentWeapon;
     private GameUnit _target;
     private TargetController _targetController;
+    private PlayerWallet _playerWallet;
 
     public bool IsShooting { get; private set; }
 
     [Inject]
-    public void Construct(BulletPool bulletPool, PlayerUpgradeSystem playerUpgradeSystem, GameConfigProxy gameConfigProxy, UISettings uISettings, TargetController targetController)
+    public void Construct(BulletPool bulletPool, PlayerUpgradeSystem playerUpgradeSystem, GameConfigProxy gameConfigProxy, UISettings uISettings, TargetController targetController, PlayerWallet playerWallet)
     {
         _targetController = targetController;
         _uISettings = uISettings;
         _bulletPool = bulletPool;
+        _playerWallet = playerWallet;
         _playerUpgradeSystem = playerUpgradeSystem;
         _couldown = gameConfigProxy.Config.PlayerConfig.Couldown;
         _damage = gameConfigProxy.Config.PlayerConfig.Damage;
@@ -108,12 +110,15 @@ public class PlayerShooter : MonoBehaviour
         }
     }
 
-    public void ActivateMassDamage()
+    public void ActivateMassDamage(int cost)
     {
-        _isMassiveDamage = true;
+        if (_playerWallet.TrySpendGem(cost))
+        {
+            _isMassiveDamage = true;
+        }
     }
 
-    public void DeactivateMassDamage()
+    public void DeactivateMassDamage(int cost)
     {
         _isMassiveDamage = false;
     }

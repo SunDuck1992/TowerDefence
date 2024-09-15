@@ -15,7 +15,7 @@ public abstract class BasePool<T>
 
     public T Spawn()
     {
-        Debug.Log("Pool ID" + GetHashCode());
+        //Debug.Log("Pool ID" + GetHashCode());
         T item = null;
 
         if (_storage.Count > 0)
