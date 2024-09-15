@@ -54,8 +54,5 @@ public class WaveScreen : MonoBehaviour
         {
             WaveComplete.Invoke();
         }
-    }
-
-
-    
+    }    
 }

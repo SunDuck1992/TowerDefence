@@ -30,6 +30,12 @@ public class PlayerWallet
         }
     }
 
+    public void AddGem()
+    {
+        _gem++;
+        GemChanged?.Invoke();
+    }
+
     public bool TrySpendGold(int gold)
     {
         if (gold > 0 & _gold - gold >= 0)
