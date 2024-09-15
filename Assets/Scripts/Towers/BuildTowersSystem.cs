@@ -11,8 +11,9 @@ public class BuildTowersSystem
     private BulletPool _bulletPool;
     private UISettings _uiSettings;
     private PlayerWallet _playerWallet;
+    private WaveScreen _waveScreen;
 
-    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet)
+    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet, WaveScreen waveScreen)
     {
         for (int i = 0; i < sceneSettings.BuildPoints.Count; i++)
         {
@@ -23,10 +24,18 @@ public class BuildTowersSystem
         _targetController = targetController;
         _bulletPool = bulletPool;
         _uiSettings = uiSettings;
+        _playerWallet = playerWallet;
+        _waveScreen = waveScreen;
 
         _uiSettings.RepairTowersButton.EnableBonus.AddListener(RepairTowers);
         _uiSettings.RepairTowersButton.DisableBonus.AddListener(RepairTowers);
-        _playerWallet = playerWallet;
+
+        _waveScreen.OnEndBattle += ResetTowerHealth;
+    }
+
+    ~BuildTowersSystem()
+    {
+        _waveScreen.OnEndBattle -= ResetTowerHealth;
     }
 
     public TowerSettings TowerSettings { get; }
@@ -73,6 +82,15 @@ public class BuildTowersSystem
 
                 tower.ResetHealth();
             }
+        }
+    }
+
+    private void ResetTowerHealth()
+    {
+        for (int i = 0; i < _targetController.Towers.Count; i++)
+        {
+            var tower = _targetController.Towers[i];
+            tower.ResetHealth();
         }
     }
 }

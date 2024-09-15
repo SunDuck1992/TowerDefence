@@ -8,7 +8,6 @@ public class BuildArea : MonoBehaviour
 
     public Transform BuildPoint => _buildPoint;
     public bool OnBuild { get; set; }
-
     public BuildTowersSystem BuildTowersSystem { get; set; }
 
     private void OnTriggerEnter(Collider other)

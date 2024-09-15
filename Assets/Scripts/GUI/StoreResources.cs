@@ -22,4 +22,9 @@ public class StoreResources : MonoBehaviour
             _playerWallet.AddGem();
         }
     }
+
+    public void OnClickButtonRewardGem()
+    {
+        // здесь будет скрипт вознаграждения за просмотр рекламы
+    }
 }

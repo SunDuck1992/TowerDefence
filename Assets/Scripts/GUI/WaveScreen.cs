@@ -17,6 +17,7 @@ public class WaveScreen : MonoBehaviour
     private Spawner _spawner;
 
     public UnityEvent WaveComplete;
+    public event Action OnEndBattle;
 
 
     [Inject]
@@ -42,7 +43,7 @@ public class WaveScreen : MonoBehaviour
         _countEnemiesProgressText.text = $"{0} / {_spawner.MaxCountEnemies}";
         _countWavetext.text = _spawner.WaveCount.ToString();
         _progressWaveBar.maxValue = _spawner.MaxCountEnemies;
-        _progressWaveBar.value = 0;
+        _progressWaveBar.value = 0;        
     }
 
     private void UpdateProgressBar()
@@ -53,6 +54,7 @@ public class WaveScreen : MonoBehaviour
         if(_progressWaveBar.value >= _spawner.MaxCountEnemies)
         {
             WaveComplete.Invoke();
+            OnEndBattle?.Invoke();
         }
     }    
 }
