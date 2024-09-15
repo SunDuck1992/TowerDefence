@@ -18,7 +18,7 @@ public class PlayerWallet
     public int Gold => _gold;
     public int Gem => _gem;
 
-    public event Action GoldChanged;
+    public event Action<int> GoldChanged;
     public event Action GemChanged;
 
     public void AddGold(int gold)
@@ -26,7 +26,7 @@ public class PlayerWallet
         if (gold >= 0)
         {
             _gold += gold;
-            GoldChanged?.Invoke();
+            GoldChanged?.Invoke(_gold);
         }
     }
 
@@ -41,7 +41,7 @@ public class PlayerWallet
         if (gold > 0 & _gold - gold >= 0)
         {
             _gold -= gold;
-            GoldChanged?.Invoke();
+            GoldChanged?.Invoke(_gold);
 
             return true;
         }
