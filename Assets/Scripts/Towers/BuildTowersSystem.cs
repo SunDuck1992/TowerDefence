@@ -42,6 +42,7 @@ public class BuildTowersSystem
 
     public event Action<BuildArea> InteractBuildArea;
     public event Action DeInteractBuildArea;
+    public event Action DestroedTower;
 
     public void OnInteractBuildArea(BuildArea buildArea)
     {
@@ -68,6 +69,7 @@ public class BuildTowersSystem
         tower.Enable();
         _currentBuildArea.OnBuild = true;
         _targetController.AddTarget(tower, true);
+        tower.DiedComplete.AddListener(Destroy);
     }
 
     private void RepairTowers(int cost)
@@ -92,5 +94,13 @@ public class BuildTowersSystem
             var tower = _targetController.Towers[i];
             tower.ResetHealth();
         }
+    }
+
+    private void Destroy(GameUnit gameUnit)
+    {
+        gameUnit.DiedComplete.RemoveAllListeners();
+        DestroedTower?.Invoke();
+        _targetController.RemoveTarget(gameUnit);
+        gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл
     }
 }

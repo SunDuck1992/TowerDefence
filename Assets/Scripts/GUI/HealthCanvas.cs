@@ -29,7 +29,7 @@ public class HealthCanvas : MonoBehaviour
 
     }
 
-    private void ChangeValue(bool isReseted )
+    private void ChangeValue(bool isReseted)
     {
         if (_isHideble)
         {
@@ -41,7 +41,7 @@ public class HealthCanvas : MonoBehaviour
             {
                 StopAllCoroutines();
                 StartCoroutine(Hide());
-            }            
+            }
         }
 
         _slider.value =_gameUnit.Health;

@@ -24,5 +24,6 @@ public class Player : GameUnit
     {
         _maxHealth += health * _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value;
         Debug.Log("maxHealth - " + _maxHealth + ", healthIncrease - " + health);
+        Debug.Log(_playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + " - UpgradeLevel");
     }
 }

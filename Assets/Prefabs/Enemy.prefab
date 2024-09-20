@@ -192,6 +192,7 @@ MonoBehaviour:
   _listener: {fileID: 4871270214736357002}
   _damage: 1
   _duration: 1
+  _award: 20
 --- !u!195 &8304202302485096984
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -42,4 +42,9 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     {
 
     }
+
+    public void Die()
+    {
+        StateMachine.SwitchState<DieTowerState, Tower>(this);
+    }
 }

@@ -5,7 +5,7 @@ public abstract class BasePool<T>
     where T : MonoBehaviour
 {
     private readonly T _prefab;
-    private Queue<T> _storage;/* = new Queue<T>();*/
+    private Queue<T> _storage;
 
     public BasePool(T prefab)
     {

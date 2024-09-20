@@ -14,6 +14,7 @@ public class Enemy : GameUnit, IStateMachineOwner
     [SerializeField] private AnimationEventListener _listener;
     [SerializeField] private float _damage;
     [SerializeField] private float _duration;
+    [SerializeField] private int _award;
 
     //public Player Target { get; set; }
     public TargetController TargetController { get; set; }
@@ -24,6 +25,7 @@ public class Enemy : GameUnit, IStateMachineOwner
     public AnimationEventListener Listener => _listener;
     public float Damage => _damage;
     public float Duration => _duration;
+    public int Award => _award;
 
     public IStateMachine StateMachine {  get; private set; }  
 

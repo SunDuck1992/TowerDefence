@@ -10,5 +10,4 @@ public interface IStateMachine
          where T : BaseState<Owner>, new()
         where Owner : class, IStateMachineOwner;
     void UpdateState();
-
 }

@@ -10,14 +10,6 @@ public class BulletPool : BasePool<Bullet>
     {       
     }
 
-    public Bullet Spawn(Vector3 direction, Quaternion quaternion)
-    {
-        Bullet bullet = base.Spawn();
-        bullet.transform.position = direction;
-        bullet.transform.rotation = quaternion;
-        return bullet;
-    }
-
     protected override void OnSpawn(Bullet spawnObject)
     {
         spawnObject.gameObject.SetActive(true);

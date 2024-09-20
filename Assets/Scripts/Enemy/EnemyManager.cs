@@ -45,9 +45,6 @@ public class EnemyManager
 
     private void ActivateSlowEnemy(int cost)
     {
-        //Debug.Log(cost + " - Action value");
-        //Debug.Log(_playerWallet.TrySpendGem(cost));
-
         if (_playerWallet.TrySpendGem(cost))
         {
             for (int i = 0; i < _targetController.Enemies.Count; i++)
@@ -71,8 +68,10 @@ public class EnemyManager
 
     private void Destroy(GameUnit gameUnit)
     {
+        var enemy = gameUnit as Enemy;
         gameUnit.DiedComplete.RemoveAllListeners();
         EnemyDied?.Invoke();
         _targetController.RemoveTarget(gameUnit);
+        _playerWallet.AddGold(enemy.Award);
     }
 }
