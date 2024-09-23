@@ -7,12 +7,13 @@ public class PlayerShooter : MonoBehaviour
 {
     public const float Radius = 5f;
 
-    [SerializeField] private float _couldown;
+    //[SerializeField] private float _couldown;
     [SerializeField] private Animator _weaponAnimator;
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Transform _view;
     [SerializeField] private Rotate _rotate;
     [SerializeField] private GameUnit _self;
+    [SerializeField] private float _multyplieChangåCharacteristickValue;
 
 
     private UISettings _uISettings;
@@ -25,6 +26,8 @@ public class PlayerShooter : MonoBehaviour
     private GameUnit _target;
     private TargetController _targetController;
     private PlayerWallet _playerWallet;
+    private float _couldown;
+    
 
     public bool IsShooting { get; private set; }
 
@@ -35,14 +38,16 @@ public class PlayerShooter : MonoBehaviour
         _uISettings = uISettings;
         _bulletPool = bulletPool;
         _playerWallet = playerWallet;
-        _playerUpgradeSystem = playerUpgradeSystem;
-        _couldown = gameConfigProxy.Config.PlayerConfig.Couldown;
+        _playerUpgradeSystem = playerUpgradeSystem;     
         _damage = gameConfigProxy.Config.PlayerConfig.Damage;
 
-        _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged += IncreaseDamage;
+        _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged += UpdateDamage;
+        _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.ValueChanged += UpdateShootSpeed;
         _uISettings.MassDamageButton.EnableBonus.AddListener(ActivateMassDamage);
         _uISettings.MassDamageButton.DisableBonus.AddListener(DeactivateMassDamage);
         ChangeWeapon(_weaponIndex);
+
+        _couldown = _currentWeapon.FireRate;
     }
 
     ~PlayerShooter()
@@ -58,11 +63,14 @@ public class PlayerShooter : MonoBehaviour
         _weaponIndex = indexWeapon;
         _currentWeapon = _weapons[_weaponIndex];
         _currentWeapon.Activate();
+        UpdateShootSpeed();
+        UpdateDamage();
     }
 
     private void OnDestroy()
     {
-        _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged -= IncreaseDamage;
+        _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged -= UpdateDamage;
+        _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.ValueChanged -= UpdateShootSpeed;
     }
 
     private void Start()
@@ -99,7 +107,7 @@ public class PlayerShooter : MonoBehaviour
 
                 IsShooting = true;
 
-                yield return new WaitForSeconds(_currentWeapon.FireRate);
+                yield return new WaitForSeconds(_couldown);
             }
             else
             {
@@ -123,18 +131,19 @@ public class PlayerShooter : MonoBehaviour
         _isMassiveDamage = false;
     }
 
-    public void IncreaseShootSpeed(float speed)
+    public void UpdateShootSpeed()
     {
-        _couldown -= speed * _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value;
+        _couldown = _currentWeapon.ChangeFirerate(_playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value);
+        //Debug.Log(_couldown + " - firerate");
     }
 
-    private void IncreaseDamage()
+    private void UpdateDamage()
     {
-        _damage += _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value;
-        Debug.Log(_damage);
+        _damage = _currentWeapon.ChangeDamage(_playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value);
+        //Debug.Log(_damage + " - damage");
     }
 
-    private void OnHit(Bullet bullet, Enemy enemy)
+    private void OnHit(Enemy enemy)
     {
         if (_isMassiveDamage)
         {
@@ -144,12 +153,12 @@ public class PlayerShooter : MonoBehaviour
             {
                 if (e != enemy)
                 {
-                    e.TakeDamage(bullet.Damage * 0.7f);
+                    e.TakeDamage(_damage * 0.7f);
                 }
             }
         }
 
-        enemy.TakeDamage(bullet.Damage);
+        enemy.TakeDamage(_damage);
     }
 
     private void BulletComplete(Bullet bullet)

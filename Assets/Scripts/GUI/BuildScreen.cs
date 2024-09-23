@@ -10,7 +10,6 @@ public class BuildScreen : MonoBehaviour
     [SerializeField] private GameObject _panel;
     [SerializeField] private TextMeshProUGUI _tower1CostText;
     [SerializeField] private TextMeshProUGUI _tower2CostText;
-    [SerializeField] private TextMeshProUGUI _tower3CostText;
 
     private BuildTowersSystem _buildTowerSystem;
     private PlayerWallet _playerWallet;
@@ -50,7 +49,6 @@ public class BuildScreen : MonoBehaviour
         _panel.SetActive(true);
         _tower1CostText.text = _buildTowerSystem.TowerSettings.Datas[0].Cost.ToString();
         _tower2CostText.text = _buildTowerSystem.TowerSettings.Datas[1].Cost.ToString();
-        _tower3CostText.text = _buildTowerSystem.TowerSettings.Datas[2].Cost.ToString();
     }
 
     private void HideBuildScreen()
