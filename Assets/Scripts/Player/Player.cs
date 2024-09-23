@@ -20,10 +20,10 @@ public class Player : GameUnit
         _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.ValueChanged -= IncreaseHealth;
     }
 
-    private void IncreaseHealth(int health)
+    private void IncreaseHealth()
     {
-        _maxHealth += health * _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value;
-        Debug.Log("maxHealth - " + _maxHealth + ", healthIncrease - " + health);
+        _maxHealth += _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value;
+        Debug.Log("maxHealth - " + _maxHealth + ", healthIncrease - " + _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value);
         Debug.Log(_playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + " - UpgradeLevel");
     }
 }

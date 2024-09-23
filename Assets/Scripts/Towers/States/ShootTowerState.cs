@@ -31,6 +31,4 @@ public class ShootTowerState : BaseState<Tower>
         bullet.HitTower -= OnHit;
         bullet.Died -= BulletComplete;
     }
-
-
 }

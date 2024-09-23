@@ -12,23 +12,22 @@ public class UpgradeButton : MonoBehaviour
 
     public event Action<Upgrade> Clicked;
 
-    //public UpgradeButton(PlayerUpgradeSystem playerUpgradeSystem)
-    //{
-    //    _playerUpgradeSystem = playerUpgradeSystem;
-    //}
-
-    
-
-    private void Start()
+    private void OnEnable()
     {
         _button.onClick.AddListener(() =>
         {
             Clicked?.Invoke(_upgrade);
+            Proverka();
         });
     }
 
     private void OnDisable()
     {
         _button.onClick.RemoveAllListeners();
+    }
+
+    private void Proverka()
+    {
+        Debug.Log(" нопка " + _upgrade + " была нажата");
     }
 }

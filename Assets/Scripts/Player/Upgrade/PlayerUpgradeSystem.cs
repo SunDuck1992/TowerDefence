@@ -6,9 +6,9 @@ using UnityEngine;
 [Serializable]
 public class UpgradeData
 {
-    public ReactValue<int> UpgradeDamageLevel = new ReactValue<int>();
-    public ReactValue<float> UpgradeShootSpeedLevel = new ReactValue<float>();
-    public ReactValue<int> UpgradeHealthLevel = new ReactValue<int>();
+    public readonly ReactValue<int> UpgradeDamageLevel = new ReactValue<int>();
+    public readonly ReactValue<float> UpgradeShootSpeedLevel = new ReactValue<float>();
+    public readonly ReactValue<int> UpgradeHealthLevel = new ReactValue<int>();
 
 }
 
@@ -29,6 +29,7 @@ public class PlayerUpgradeSystem
                 break;
 
             case Upgrade.Health:
+                Debug.Log(UpgradeData.UpgradeHealthLevel.Value + " - значение Value до изменения");
                 UpgradeData.UpgradeHealthLevel.Value++;
                 break;
         }

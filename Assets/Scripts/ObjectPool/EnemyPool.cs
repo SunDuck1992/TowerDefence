@@ -1,6 +1,6 @@
 public class EnemyPool : BasePool<GameUnit>
 {
-    public EnemyPool(GameUnit prefab) : base(prefab)
+    public EnemyPool(GameUnit prefab, bool isDebug) : base(prefab, isDebug)
     {
     }
 

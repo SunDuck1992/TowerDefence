@@ -13,9 +13,9 @@ public class ReactValue<T>
         set
         {
             _value = value;
-            ValueChanged?.Invoke(_value);
+            ValueChanged?.Invoke();
         }
     }
 
-    public event Action<T> ValueChanged;
+    public event Action ValueChanged;
 }

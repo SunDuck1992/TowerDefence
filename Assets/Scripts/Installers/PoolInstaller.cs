@@ -9,6 +9,6 @@ public class PoolInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<BulletPool>().FromInstance(new BulletPool(_bulletPrefab)).AsSingle();
-        Container.Bind<EnemyPool>().FromInstance(new EnemyPool(_enemyPrefab)).AsSingle();
+        Container.Bind<EnemyPool>().FromInstance(new EnemyPool(_enemyPrefab, true)).AsSingle();
     }
 }

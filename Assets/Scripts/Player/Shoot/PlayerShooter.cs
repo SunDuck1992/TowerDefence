@@ -128,9 +128,9 @@ public class PlayerShooter : MonoBehaviour
         _couldown -= speed * _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value;
     }
 
-    private void IncreaseDamage(int damage)
+    private void IncreaseDamage()
     {
-        _damage += damage * _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value;
+        _damage += _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value;
         Debug.Log(_damage);
     }
 
