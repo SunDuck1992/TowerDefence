@@ -15,6 +15,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private GameUnit _self;
     [SerializeField] private float _multyplieChangåCharacteristickValue;
 
+    public Weapon CurrentWeapon { get; private set; }
 
     private UISettings _uISettings;
     private float _damage;
@@ -22,12 +23,11 @@ public class PlayerShooter : MonoBehaviour
     private PlayerUpgradeSystem _playerUpgradeSystem;
     private bool _isMassiveDamage;
     private int _weaponIndex;
-    private Weapon _currentWeapon;
     private GameUnit _target;
     private TargetController _targetController;
     private PlayerWallet _playerWallet;
     private float _couldown;
-    
+
 
     public bool IsShooting { get; private set; }
 
@@ -38,7 +38,7 @@ public class PlayerShooter : MonoBehaviour
         _uISettings = uISettings;
         _bulletPool = bulletPool;
         _playerWallet = playerWallet;
-        _playerUpgradeSystem = playerUpgradeSystem;     
+        _playerUpgradeSystem = playerUpgradeSystem;
         _damage = gameConfigProxy.Config.PlayerConfig.Damage;
 
         _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged += UpdateDamage;
@@ -47,7 +47,7 @@ public class PlayerShooter : MonoBehaviour
         _uISettings.MassDamageButton.DisableBonus.AddListener(DeactivateMassDamage);
         ChangeWeapon(_weaponIndex);
 
-        _couldown = _currentWeapon.FireRate;
+        _couldown = CurrentWeapon.FireRate;
     }
 
     ~PlayerShooter()
@@ -58,11 +58,14 @@ public class PlayerShooter : MonoBehaviour
 
     public void ChangeWeapon(int indexWeapon)
     {
-        _currentWeapon?.DeActivate();
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon?.DeActivate();
+        }
 
         _weaponIndex = indexWeapon;
-        _currentWeapon = _weapons[_weaponIndex];
-        _currentWeapon.Activate();
+        CurrentWeapon = _weapons[_weaponIndex];
+        CurrentWeapon.Activate();
         UpdateShootSpeed();
         UpdateDamage();
     }
@@ -82,7 +85,7 @@ public class PlayerShooter : MonoBehaviour
     {
         if (_target != null)
         {
-            Vector3 rotate = _target.transform.position - _currentWeapon.WeaponPoint.transform.position;
+            Vector3 rotate = _target.transform.position - CurrentWeapon.WeaponPoint.transform.position;
             rotate.y = 0;
             _rotate.Direction = rotate;
             _rotate.IsShooting = true;
@@ -96,13 +99,13 @@ public class PlayerShooter : MonoBehaviour
             _target = _targetController.GetTarget(_self, 10, true);
             if (_target != null)
             {
-                for (int i = 0; i < _currentWeapon.CountBullet; i++)
+                for (int i = 0; i < CurrentWeapon.CountBullet; i++)
                 {
                     Bullet bullet = _bulletPool.Spawn();
                     bullet.Hit += OnHit;
                     bullet.Died += BulletComplete;
 
-                    _currentWeapon.Shoot(bullet);
+                    CurrentWeapon.Shoot(bullet);
                 }
 
                 IsShooting = true;
@@ -133,13 +136,13 @@ public class PlayerShooter : MonoBehaviour
 
     public void UpdateShootSpeed()
     {
-        _couldown = _currentWeapon.ChangeFirerate(_playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value);
+        _couldown = CurrentWeapon.ChangeFirerate(_playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value);
         //Debug.Log(_couldown + " - firerate");
     }
 
     private void UpdateDamage()
     {
-        _damage = _currentWeapon.ChangeDamage(_playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value);
+        _damage = CurrentWeapon.ChangeDamage(_playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value);
         //Debug.Log(_damage + " - damage");
     }
 
