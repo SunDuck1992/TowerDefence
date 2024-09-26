@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class IdleTowerState : BaseState<Tower>
+public class IdleMashineGunTowerState : BaseState<MashineGunTower>
 {
     public override void Update()
     {
@@ -23,7 +23,7 @@ public class IdleTowerState : BaseState<Tower>
 
             if(angle <= 5f)
             {
-                Owner.StateMachine.SwitchState<ShootTowerState, Tower>(Owner, state => state.target = target);
+                Owner.StateMachine.SwitchState<ShootMashineGunTowerState, MashineGunTower>(Owner, state => state.target = target);
             }
         }
     }

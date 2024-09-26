@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ReloadTowerState : BaseState<Tower>
+public class ReloadMashineGunTowerState : BaseState<MashineGunTower>
 {
     private float _fireRate;
 
@@ -18,7 +18,7 @@ public class ReloadTowerState : BaseState<Tower>
     {
         if (Time.time > _fireRate)
         {
-            Owner.StateMachine.SwitchState<IdleTowerState, Tower>(Owner);
+            Owner.StateMachine.SwitchState<IdleMashineGunTowerState, MashineGunTower>(Owner);
         }
     }
 }

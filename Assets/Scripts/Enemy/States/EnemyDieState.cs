@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnemyDieState : BaseState<Enemy>
 {
-    float timer = 1.5f;
+    private float _timer = 2f;
+    private bool _hasDied;
 
     public override void Enter()
     {
+        _hasDied = false;
         int typeDie = Random.Range(0, 2);
 
         Owner.Agent.enabled = false;
@@ -18,11 +20,22 @@ public class EnemyDieState : BaseState<Enemy>
 
     public override void Update()
     {
-        timer -= Time.deltaTime;
-
-        if(timer <= 0)
+        if ((Owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Die02") || Owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Die01")) && !_hasDied)
         {
-            Owner.StateMachine.SwitchState<EnemyIdleState, Enemy>(Owner);
+            if (Owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                _hasDied = true; 
+            }
+        }
+
+        if (_hasDied)
+        {
+            _timer -= Time.deltaTime;
+
+            if (_timer <= 0)
+            {
+                Owner.StateMachine.SwitchState<EnemyIdleState, Enemy>(Owner);
+            }
         }
     }
 
@@ -30,7 +43,7 @@ public class EnemyDieState : BaseState<Enemy>
     {
         Owner.DiedComplete.Invoke(Owner);
 
-        if(Owner.Target != null && Owner.TargetAttackPoint != null)
+        if (Owner.Target != null && Owner.TargetAttackPoint != null)
         {
             Owner.Target.AttackSector.freePoints.Push(Owner.TargetAttackPoint);
         }

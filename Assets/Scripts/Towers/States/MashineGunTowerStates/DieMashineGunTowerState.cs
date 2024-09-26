@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DieTowerState : BaseState<Tower>
+public class DieMashineGunTowerState : BaseState<MashineGunTower>
 {
     public override void Update()
     {
-        Owner.StateMachine.SwitchState<IdleTowerState, Tower>(Owner);
+        Owner.StateMachine.SwitchState<IdleMashineGunTowerState, MashineGunTower>(Owner);
     }
 
     public override void Exit()

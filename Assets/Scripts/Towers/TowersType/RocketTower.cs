@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class RocketTower : Tower
 {
-    
+    public override void Enable()
+    {
+        StateMachine.SwitchState<IdleRocketTowerState, RocketTower>(this);
+    }
 }

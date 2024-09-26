@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,18 @@ public class BuildTowersSystem
     private UISettings _uiSettings;
     private PlayerWallet _playerWallet;
     private WaveScreen _waveScreen;
+
+    //private float _pingPongScaleDuration = 1f;
+    //private float _pingPongHalfScaleDuration = 0.5f;
+
+    //private Vector3 _originalScale;
+    //private Vector3 _pingPongDesiredScale;
+    //private Vector3 _pingPongScaleAddition = new Vector3(0.2f, 0.2f, 0);
+
+    //private Canvas _canvas;
+    //private Transform _canvasTransform;
+
+    //private bool _isEnter;
 
     public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet, WaveScreen waveScreen)
     {
@@ -44,10 +57,20 @@ public class BuildTowersSystem
     public event Action DeInteractBuildArea;
     public event Action DestroedTower;
 
+    //private void Start()
+    //{
+    //    _canvas = GetComponentInChildren<Canvas>();
+    //    _canvasTransform = _canvas.transform;
+    //    _originalScale = _canvasTransform.localScale;
+    //    _pingPongDesiredScale = _originalScale + _pingPongScaleAddition;
+
+    //}
+
     public void OnInteractBuildArea(BuildArea buildArea)
     {
         InteractBuildArea?.Invoke(buildArea);
         _currentBuildArea = buildArea;
+        //_canvas = _currentBuildArea.Canvas;
     }
 
     public void OnDeInteractBuildArea()
@@ -103,4 +126,17 @@ public class BuildTowersSystem
         _targetController.RemoveTarget(gameUnit);
         gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл
     }
+
+    //private IEnumerator PingPongScale(bool isDelivering)
+    //{
+    //    while (isDelivering)
+    //    {
+    //        _canvasTransform.DOScale(_pingPongDesiredScale, _pingPongHalfScaleDuration).SetEase(Ease.InOutSine).OnComplete(() =>
+    //        {
+    //            _canvasTransform.DOScale(_originalScale, _pingPongHalfScaleDuration).SetEase(Ease.OutBounce);
+    //        });
+
+    //        yield return new WaitForSeconds(_pingPongScaleDuration);
+    //    }
+    //}
 }

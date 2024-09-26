@@ -162,18 +162,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f2ea4fef7c4cd4c8bd515276c75736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
+  _maxHealth: 50
   DiedComplete:
     m_PersistentCalls:
       m_Calls: []
   DiedStart:
     m_PersistentCalls:
       m_Calls: []
-  _transformTower: {fileID: 0}
-  _shotPoint: {fileID: 0}
-  _damage: 0
-  _fireRate: 0
-  _shootDistance: 0
+  _transformTower: {fileID: 4430750139889829150}
+  _shotPoint: {fileID: 8732622746965480457}
+  _damage: 1
+  _fireRate: 1
+  _shootDistance: 20
 --- !u!114 &-2023740922021211008
 MonoBehaviour:
   m_ObjectHideFlags: 0

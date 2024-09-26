@@ -14,7 +14,6 @@ public class ResourcesScreen : MonoBehaviour
 
     private PlayerWallet _playerWallet;
     private int _currentGold;
-    private int _targetGold;
 
     [Inject]
     public void Construct(PlayerWallet playerWallet)

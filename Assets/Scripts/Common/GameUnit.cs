@@ -10,6 +10,7 @@ public abstract class GameUnit : MonoBehaviour
     [SerializeField] protected float _maxHealth;
 
     private float _health;
+    private bool _isDead;
 
     public float Health => _health;
     public float MaxHealth => _maxHealth;
@@ -28,22 +29,29 @@ public abstract class GameUnit : MonoBehaviour
     private void OnEnable()
     {
         _health = _maxHealth;
+        _isDead = false;
     }
 
     public void TakeDamage(float damage)
     {
+        if(_isDead) return;
+
         _health -= damage;
         HealthChanged?.Invoke(false);
 
         if (_health <= 0)
         {
-            DiedStart.Invoke(this);           
+            _isDead = true;
+            DiedStart.Invoke(this);
+            Debug.Log("DiedStart Invoke");
+            Debug.Log(_health + " - HP");
         }
     }
 
     public void ResetHealth()
     {
         _health = _maxHealth;
+        _isDead = false;
         HealthChanged?.Invoke(true);
     }
 }

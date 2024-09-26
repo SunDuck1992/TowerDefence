@@ -5,6 +5,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Enemy : GameUnit, IStateMachineOwner
 {
@@ -40,6 +41,7 @@ public class Enemy : GameUnit, IStateMachineOwner
         StateMachine.SwitchState<EnemyIdleState, Enemy>(this);
         ResetHealth();
         TargetController.AddTarget(this);
+        Debug.Log($"Создан моб: {this.GetInstanceID()}, Аниматор: {Animator.GetInstanceID()}");
     }
 
     private void Update()

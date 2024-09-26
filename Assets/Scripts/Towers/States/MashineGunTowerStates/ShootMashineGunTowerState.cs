@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootTowerState : BaseState<Tower>
+public class ShootMashineGunTowerState : BaseState<MashineGunTower>
 {
     public GameUnit target;
     private Bullet _bullet;
@@ -18,7 +18,7 @@ public class ShootTowerState : BaseState<Tower>
         _bullet.HitTower += OnHit;
         _bullet.Died += BulletComplete;
 
-        Owner.StateMachine.SwitchState<ReloadTowerState, Tower>(Owner);
+        Owner.StateMachine.SwitchState<ReloadMashineGunTowerState, MashineGunTower>(Owner);
     }
 
     private void OnHit(Enemy enemy)
