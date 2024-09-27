@@ -14,6 +14,8 @@ public class BuildTowersSystem
     private PlayerWallet _playerWallet;
     private WaveScreen _waveScreen;
 
+    public BuildArea CurrentBuildArea => _currentBuildArea;
+
     //private float _pingPongScaleDuration = 1f;
     //private float _pingPongHalfScaleDuration = 0.5f;
 
