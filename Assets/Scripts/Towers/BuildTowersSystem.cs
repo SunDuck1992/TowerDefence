@@ -10,25 +10,15 @@ public class BuildTowersSystem
     private BuildArea _currentBuildArea;
     private TargetController _targetController;
     private BulletPool _bulletPool;
+    private RocketPool _rocketPool;
     private UISettings _uiSettings;
     private PlayerWallet _playerWallet;
     private WaveScreen _waveScreen;
+    private Tower _towerBuild;
 
     public BuildArea CurrentBuildArea => _currentBuildArea;
 
-    //private float _pingPongScaleDuration = 1f;
-    //private float _pingPongHalfScaleDuration = 0.5f;
-
-    //private Vector3 _originalScale;
-    //private Vector3 _pingPongDesiredScale;
-    //private Vector3 _pingPongScaleAddition = new Vector3(0.2f, 0.2f, 0);
-
-    //private Canvas _canvas;
-    //private Transform _canvasTransform;
-
-    //private bool _isEnter;
-
-    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet, WaveScreen waveScreen)
+    public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet, WaveScreen waveScreen, RocketPool rocketPool)
     {
         for (int i = 0; i < sceneSettings.BuildPoints.Count; i++)
         {
@@ -38,6 +28,7 @@ public class BuildTowersSystem
         TowerSettings = towerSettings;
         _targetController = targetController;
         _bulletPool = bulletPool;
+        _rocketPool = rocketPool;
         _uiSettings = uiSettings;
         _playerWallet = playerWallet;
         _waveScreen = waveScreen;
@@ -46,6 +37,7 @@ public class BuildTowersSystem
         _uiSettings.RepairTowersButton.DisableBonus.AddListener(RepairTowers);
 
         _waveScreen.OnEndBattle += ResetTowerHealth;
+        _rocketPool = rocketPool;
     }
 
     ~BuildTowersSystem()
@@ -59,31 +51,21 @@ public class BuildTowersSystem
     public event Action DeInteractBuildArea;
     public event Action DestroedTower;
 
-    //private void Start()
-    //{
-    //    _canvas = GetComponentInChildren<Canvas>();
-    //    _canvasTransform = _canvas.transform;
-    //    _originalScale = _canvasTransform.localScale;
-    //    _pingPongDesiredScale = _originalScale + _pingPongScaleAddition;
-
-    //}
-
     public void OnInteractBuildArea(BuildArea buildArea)
     {
         InteractBuildArea?.Invoke(buildArea);
         _currentBuildArea = buildArea;
-        //_canvas = _currentBuildArea.Canvas;
     }
 
     public void OnDeInteractBuildArea()
     {
         DeInteractBuildArea?.Invoke();
-        _currentBuildArea = null;
+        //_currentBuildArea = null;
     }
 
     public void BuildTower(Tower prefab)
     {
-        if (_currentBuildArea == null) return;
+        //if (_currentBuildArea == null) return;
 
         if (_currentBuildArea.OnBuild) return;
 
@@ -91,10 +73,17 @@ public class BuildTowersSystem
         Tower tower = MonoBehaviour.Instantiate(prefab, hit.position, Quaternion.identity);
         tower.TargetController = _targetController;
         tower.BulletPool = _bulletPool;
+        tower.RocketPool = _rocketPool;
         tower.Enable();
         _currentBuildArea.OnBuild = true;
         _targetController.AddTarget(tower, true);
         tower.DiedComplete.AddListener(Destroy);
+        _towerBuild = tower;
+    }
+
+    public Tower GetBuildTower()
+    {
+        return _towerBuild;
     }
 
     private void RepairTowers(int cost)
@@ -126,19 +115,7 @@ public class BuildTowersSystem
         gameUnit.DiedComplete.RemoveAllListeners();
         DestroedTower?.Invoke();
         _targetController.RemoveTarget(gameUnit);
+        _currentBuildArea.OnBuild = false;
         gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл
     }
-
-    //private IEnumerator PingPongScale(bool isDelivering)
-    //{
-    //    while (isDelivering)
-    //    {
-    //        _canvasTransform.DOScale(_pingPongDesiredScale, _pingPongHalfScaleDuration).SetEase(Ease.InOutSine).OnComplete(() =>
-    //        {
-    //            _canvasTransform.DOScale(_originalScale, _pingPongHalfScaleDuration).SetEase(Ease.OutBounce);
-    //        });
-
-    //        yield return new WaitForSeconds(_pingPongScaleDuration);
-    //    }
-    //}
 }

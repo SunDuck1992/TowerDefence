@@ -21,7 +21,7 @@ public class IdleMashineGunTowerState : BaseState<MashineGunTower>
 
             float angle = Vector3.Angle(Owner.TransformTower.forward, direction.normalized);
 
-            if(angle <= 5f)
+            if (angle <= 5f)
             {
                 Owner.StateMachine.SwitchState<ShootMashineGunTowerState, MashineGunTower>(Owner, state => state.target = target);
             }

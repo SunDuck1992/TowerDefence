@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DieRocketTowerState : MonoBehaviour
+public class DieRocketTowerState : BaseState<RocketTower>
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Update()
     {
-        
+        Owner.StateMachine.SwitchState<IdleRocketTowerState, RocketTower>(Owner);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+        Owner.DiedComplete.Invoke(Owner);
     }
 }

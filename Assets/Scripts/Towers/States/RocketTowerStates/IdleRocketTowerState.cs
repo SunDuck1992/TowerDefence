@@ -8,7 +8,7 @@ public class IdleRocketTowerState : BaseState<RocketTower>
 {
     public override void Update()
     {
-        var target = Owner.TargetController.GetTarget(Owner, 20, true);
+        var target = Owner.TargetController.GetTarget(Owner, 25, true);
 
         if (target != null)
         {

@@ -17,6 +17,7 @@ public class ShopScreen : MonoBehaviour
 
     private PlayerShooter _playerShooter;
     private PlayerWallet _playerWallet;
+    private float _duration = 2f;
     private string _needMoreGoldText = "Need more gold";
 
     [Inject]
@@ -102,7 +103,7 @@ public class ShopScreen : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        for (float t = 2f; t >= 0; t -= Time.deltaTime)
+        for (float t = _duration; t >= 0; t -= Time.deltaTime)
         {
             Color color = nextTexts.color;
             color.a = t;

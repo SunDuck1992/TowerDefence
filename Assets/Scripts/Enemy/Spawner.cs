@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
 {
     //[SerializeField] private List<Transform> _points;
 
-    private int _countEnemies = 5;
+    private int _countEnemies = 1;
 
     private EnemyManager _enemyManager;
     private SceneSettings _sceneSettings;
@@ -35,6 +35,6 @@ public class Spawner : MonoBehaviour
 
         MaxCountEnemies = _countEnemies;
         WaveCount++;
-        _countEnemies += 3;
+        _countEnemies += 1;
     }
 }

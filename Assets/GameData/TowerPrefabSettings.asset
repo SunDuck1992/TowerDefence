@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _datas:
   - _prefab: {fileID: 2037166588890622682, guid: ba522dbc3e91ec64baf42c7fce5ab23f, type: 3}
-    _cost: 100
-  - _prefab: {fileID: -4274817333000261637, guid: e1250c997dc21b340be29f9a052ab04f, type: 3}
     _cost: 150
-  - _prefab: {fileID: 4711297992329127859, guid: 57f924767128f9b48959411dd1dfbadb, type: 3}
+  - _prefab: {fileID: 1660129653782035503, guid: 7a3de514f1192e54c8d1389a524bb7d3, type: 3}
     _cost: 200
+  - _prefab: {fileID: 0}
+    _cost: 100

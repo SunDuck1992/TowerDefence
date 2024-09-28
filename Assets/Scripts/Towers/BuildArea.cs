@@ -20,11 +20,13 @@ public class BuildArea : MonoBehaviour
     private Canvas _canvas;
     private Transform _canvasTransform;
     private Coroutine _coroutine;
+    private Tower _currentTower;
 
     private bool _isEnter;
 
     public Canvas Canvas => _canvas;
     public Transform BuildPoint => _buildPoint;
+    public Tower CurrentTower => _currentTower;
     public bool OnBuild { get; set; }
     public BuildTowersSystem BuildTowersSystem { get; set; }
 
@@ -62,6 +64,18 @@ public class BuildArea : MonoBehaviour
         }
 
         BuildTowersSystem.OnDeInteractBuildArea();
+    }
+
+    public void SetCurrentTower(Tower tower)
+    {
+        _currentTower = tower;
+    }
+
+    public void DestroyCurrentTower()
+    {
+        Debug.Log(_currentTower.name);
+        _currentTower.DiedStart?.Invoke(_currentTower);
+
     }
 
     private void StartFilling()

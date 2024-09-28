@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReloadRocketTowerState : MonoBehaviour
+public class ReloadRocketTowerState : BaseState<RocketTower>
 {
-    // Start is called before the first frame update
-    void Start()
+    private float _fireRate;
+
+    public override void Enter()
     {
-        
+        _fireRate = Owner.FireRate + Time.time;
+
+        Debug.Log(Owner.FireRate + " - Owner Firerate");
+        Debug.Log(_fireRate + " - firerate proverka");
+        Debug.Log(Time.time);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        if(Time.time > _fireRate)
+        {
+            Owner.StateMachine.SwitchState<IdleRocketTowerState, RocketTower>(Owner);
+        }
     }
 }

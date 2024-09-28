@@ -21,6 +21,7 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     public IStateMachine StateMachine { get; private set; }
     public TargetController TargetController { get; set; }
     public BulletPool BulletPool { get; set; }
+    public RocketPool RocketPool { get; set; }
 
     protected override void Awake()
     {

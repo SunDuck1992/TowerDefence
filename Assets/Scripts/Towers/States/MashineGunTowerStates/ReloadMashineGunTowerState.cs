@@ -11,7 +11,6 @@ public class ReloadMashineGunTowerState : BaseState<MashineGunTower>
     public override void Enter()
     {
         _fireRate = Owner.FireRate + Time.time;
-
     }
 
     public override void Update()
