@@ -8,6 +8,7 @@ public class BuildArea : MonoBehaviour
 {
     [SerializeField] private Transform _buildPoint;
     [SerializeField] private Image _sliderImage;
+    [SerializeField] private int _waveLevel;
 
     private float _fillDuration = 2f;
     private float _pingPongScaleDuration = 1f;
@@ -29,6 +30,7 @@ public class BuildArea : MonoBehaviour
     public Tower CurrentTower => _currentTower;
     public bool OnBuild { get; set; }
     public BuildTowersSystem BuildTowersSystem { get; set; }
+    public int WaveLevel => _waveLevel;
 
     private void Awake()
     {

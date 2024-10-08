@@ -194,7 +194,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -308.96735, y: -288.41946, z: 241.85403}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4613025936717067559}
@@ -237,7 +237,7 @@ MonoBehaviour:
   _shotPoint: {fileID: 4666933755291465201}
   _damage: 3
   _fireRate: 2
-  _shootDistance: 25
+  _shootDistance: 50
 --- !u!114 &5323818135748279708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sectorPoints: 8
-  _radius: 2
+  _radius: 2.5
 --- !u!1 &7414970411562838266
 GameObject:
   m_ObjectHideFlags: 0

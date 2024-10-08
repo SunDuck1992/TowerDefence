@@ -14,11 +14,13 @@ public abstract class GameUnit : MonoBehaviour
 
     public float Health => _health;
     public float MaxHealth => _maxHealth;
+    public bool IsDead => _isDead;
 
     public AttackSector AttackSector { get; private set; }
 
     public UnityEvent<GameUnit> DiedComplete;
     public UnityEvent<GameUnit> DiedStart;
+    public event Action OnDied;
     public event Action<bool> HealthChanged;
 
     protected virtual void Awake()
@@ -42,9 +44,8 @@ public abstract class GameUnit : MonoBehaviour
         if (_health <= 0)
         {
             _isDead = true;
+            OnDied?.Invoke();
             DiedStart.Invoke(this);
-            Debug.Log("DiedStart Invoke");
-            Debug.Log(_health + " - HP");
         }
     }
 

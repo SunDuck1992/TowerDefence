@@ -11,16 +11,18 @@ public class EnemyManager
     private readonly UISettings _uiSettings;
     private readonly TargetController _targetController;
     private readonly PlayerWallet _playerWallet;
+    private readonly EnemyImprover _enemyImprover;
 
     public event Action EnemyDied;
 
-    public EnemyManager(EnemyPool enemyPool, SceneSettings sceneSettings, UISettings uISettings, TargetController targetController, PlayerWallet playerWallet)
+    public EnemyManager(EnemyPool enemyPool, SceneSettings sceneSettings, UISettings uISettings, TargetController targetController, PlayerWallet playerWallet, EnemyImprover enemyImprover)
     {
         _enemyPool = enemyPool;
         _sceneSettings = sceneSettings;
         _uiSettings = uISettings;
         _targetController = targetController;
         _playerWallet = playerWallet;
+        _enemyImprover = enemyImprover;
 
         _uiSettings.SlowEnemyButton.EnableBonus.AddListener(ActivateSlowEnemy);
         _uiSettings.SlowEnemyButton.DisableBonus.AddListener(DeActivateSlowEnemy);
@@ -38,9 +40,12 @@ public class EnemyManager
         enemy.transform.position = point;
         enemy.TargetController = _targetController;
         enemy.Enable();
+        enemy.ImproveCharacteristic(_enemyImprover.Health, _enemyImprover.Damage);
         enemy.DiedComplete.AddListener(Destroy);
+        enemy.DiedStart.AddListener(CleanTarget);
 
         //Debug.Log("ID" + enemy.GetHashCode());
+        Debug.Log(_enemyImprover.Health + " - improve health, " + _enemyImprover.Damage + " - improve damage");
     }
 
     private void ActivateSlowEnemy(int cost)
@@ -71,7 +76,12 @@ public class EnemyManager
         var enemy = gameUnit as Enemy;
         gameUnit.DiedComplete.RemoveAllListeners();
         EnemyDied?.Invoke();
-        _targetController.RemoveTarget(gameUnit);
+       
         _playerWallet.AddGold(enemy.Award);
+    }
+
+    private void CleanTarget(GameUnit gameUnit)
+    {
+        _targetController.RemoveTarget(gameUnit);
     }
 }

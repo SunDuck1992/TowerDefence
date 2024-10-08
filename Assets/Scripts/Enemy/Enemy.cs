@@ -17,7 +17,6 @@ public class Enemy : GameUnit, IStateMachineOwner
     [SerializeField] private float _duration;
     [SerializeField] private int _award;
 
-    //public Player Target { get; set; }
     public TargetController TargetController { get; set; }
     public GameUnit Target {  get; set; }
     public Transform TargetAttackPoint { get; set; }
@@ -42,6 +41,12 @@ public class Enemy : GameUnit, IStateMachineOwner
         ResetHealth();
         TargetController.AddTarget(this);
         Debug.Log($"Создан моб: {this.GetInstanceID()}, Аниматор: {Animator.GetInstanceID()}");
+    }
+
+    public void ImproveCharacteristic(float health, float damage)
+    {
+        _maxHealth += health;
+        _damage += damage;
     }
 
     private void Update()

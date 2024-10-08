@@ -14,6 +14,7 @@ public class PlayerInstaller : MonoInstaller
         Container.Bind<GameConfigProxy>().FromInstance(new GameConfigProxy(_gameConfig)).AsSingle();
         Container.Bind<Enemy>().FromInstance(_enemies).AsSingle();
         Container.Bind<EnemyManager>().AsSingle();
+        Container.Bind<EnemyImprover>().AsSingle();
         Container.Bind<PlayerShooter>().FromInstance(_playerShooter).AsSingle();
         Container.Bind<PlayerMovement>().FromInstance(_playerMovement).AsSingle();
         Container.Bind<PlayerUpgradeSystem>().AsSingle();

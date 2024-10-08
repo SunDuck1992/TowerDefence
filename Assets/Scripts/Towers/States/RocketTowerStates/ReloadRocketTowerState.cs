@@ -10,15 +10,17 @@ public class ReloadRocketTowerState : BaseState<RocketTower>
     {
         _fireRate = Owner.FireRate + Time.time;
 
-        Debug.Log(Owner.FireRate + " - Owner Firerate");
-        Debug.Log(_fireRate + " - firerate proverka");
-        Debug.Log(Time.time);
+        Debug.LogWarning("Вошли в состояние перезарядки");
+
+        Debug.LogWarning(Owner.FireRate + " - Owner Firerate, " + _fireRate + " - fireRate, " + Time.time + " - Time.time");
+
     }
 
     public override void Update()
     {
-        if(Time.time > _fireRate)
+        if (Time.time > _fireRate)
         {
+            Debug.LogWarning("Перезарядились, идем в состояние поиска цели");
             Owner.StateMachine.SwitchState<IdleRocketTowerState, RocketTower>(Owner);
         }
     }

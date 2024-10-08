@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
 {
     //[SerializeField] private List<Transform> _points;
 
-    private int _countEnemies = 1;
+    private int _countEnemies = 3;
 
     private EnemyManager _enemyManager;
     private SceneSettings _sceneSettings;
@@ -24,8 +24,6 @@ public class Spawner : MonoBehaviour
 
     public void SpawnOnClick()
     {
-        Debug.Log(_enemyManager + " - EnemyManager");
-
         Transform point = _sceneSettings.Points[Random.Range(0, _sceneSettings.Points.Count)];
 
         for (int i = 0; i < _countEnemies; i++)

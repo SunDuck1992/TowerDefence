@@ -19,8 +19,10 @@ public class BuildScreen : MonoBehaviour
     private BuildTowersSystem _buildTowerSystem;
     private PlayerWallet _playerWallet;
     private Tower _tower;
+    private Coroutine _coroutine;
     private float _duration = 2f;
     private string _needMoreGoldText = "Need more gold";
+    private bool[] _isCoroutineRunning = new bool[3];
 
     [Inject]
     public void Construct(BuildTowersSystem buildTowersSystem, PlayerWallet playerWallet)
@@ -47,13 +49,12 @@ public class BuildScreen : MonoBehaviour
             }
             else
             {
-                StartCoroutine(ChangeText(index));
+                if (!_isCoroutineRunning[index])
+                {
+                    _isCoroutineRunning[index] = true;
+                    StartCoroutine(ChangeText(index));
+                }               
             }
-        }
-        else
-        {
-            // TODO
-            // Добавить экран с недостатком денег
         }
     }
 
@@ -67,7 +68,11 @@ public class BuildScreen : MonoBehaviour
             }
             else
             {
-                StartCoroutine(ChangeText(index));
+                if (!_isCoroutineRunning[index])
+                {
+                    _isCoroutineRunning[index] = true;
+                    StartCoroutine(ChangeText(index));
+                }
             }
         }
     }
@@ -153,5 +158,7 @@ public class BuildScreen : MonoBehaviour
 
         nextTexts.text = text;
         nextTexts.color = Color.white;
+
+        _isCoroutineRunning[index] = false;
     }
 }

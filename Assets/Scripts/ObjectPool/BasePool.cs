@@ -18,17 +18,7 @@ public abstract class BasePool<T>
 
     public T Spawn()
     {
-
-
-        //Debug.Log("Pool ID" + GetHashCode());
         T item = null;
-
-        if (_isDebug)
-        {
-
-            Debug.Log(_storage.Count + " -  Storage Count");
-        }
-
 
         if (_storage.Count > 0)
         {
@@ -39,12 +29,6 @@ public abstract class BasePool<T>
             item = MonoBehaviour.Instantiate(_prefab);
         }
 
-        if (_isDebug)
-        {
-            Debug.Log(" ", item.gameObject);
-
-        }
-
         OnSpawn(item);
         return item;
     }
@@ -53,11 +37,6 @@ public abstract class BasePool<T>
     {
         OnDespawn(despawnObject);
         _storage.Enqueue(despawnObject);
-        if (_isDebug)
-        {
-            Debug.Log(" ", despawnObject.gameObject);
-
-        }
     }
 
     protected abstract void OnSpawn(T spawnObject);
