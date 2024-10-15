@@ -11,13 +11,11 @@ public class BuildScreen : MonoBehaviour
     [SerializeField] private GameObject _panel;
     [SerializeField] private GameObject _secondPanel;
     [SerializeField] private List<TextMeshProUGUI> _towerCostTexts;
+    [SerializeField] private TextMeshProUGUI _improveLevelText;
     [SerializeField] private List<Image> _towerImages;
     [SerializeField] private Image _currentImage;
     [SerializeField] private int _destroycost;
-    //[SerializeField] private Sprite _buyedSprite;
-    //[SerializeField] private Sprite _baseSprite;
-    //[SerializeField] private List<bool> _isBuyeds;
-    //[SerializeField] private List<Image> _buttons;
+    [SerializeField] private int _improveCost;
 
     private BuildTowersSystem _buildTowerSystem;
     private PlayerWallet _playerWallet;
@@ -44,13 +42,10 @@ public class BuildScreen : MonoBehaviour
         {
             if (_playerWallet.TrySpendGold(costTower))
             {
-                //_isBuyeds[index] = true;
                 _buildTowerSystem.BuildTower(_buildTowerSystem.TowerSettings.Datas[index].Prefab);
                 _tower = _buildTowerSystem.GetBuildTower();
                 _buildTowerSystem.CurrentBuildArea.SetCurrentTower(_tower);
                 _currentSprite = _buildTowerSystem.TowerSettings.Datas[index].Sprite;
-
-                //ChangeButtonSprite(index);
             }
             else
             {
@@ -58,18 +53,18 @@ public class BuildScreen : MonoBehaviour
                 {
                     _isCoroutineRunning[index] = true;
                     StartCoroutine(ChangeText(index));
-                }               
+                }
             }
         }
     }
 
     public void OnClickButtonDestroy(int index)
     {
-        if (/*_buildTowerSystem.CurrentBuildArea != null && _buildTowerSystem.CurrentBuildArea.CurrentTower != null*/  _buildTowerSystem.CurrentBuildArea.OnBuild)
+        if (_buildTowerSystem.CurrentBuildArea.OnBuild)
         {
             Debug.Log("ѕрошли проверку на возможность уничтожени€");
 
-            if(_playerWallet.TrySpendGold(_destroycost))
+            if (_playerWallet.TrySpendGold(_destroycost))
             {
                 _buildTowerSystem.CurrentBuildArea.DestroyCurrentTower();
             }
@@ -80,6 +75,24 @@ public class BuildScreen : MonoBehaviour
                     _isCoroutineRunning[index] = true;
                     StartCoroutine(ChangeText(index));
                 }
+            }
+        }
+    }
+
+    public void OnClickButtonImprove()
+    {
+        var tower = _buildTowerSystem.CurrentBuildArea.CurrentTower as Tower;
+
+        _buildTowerSystem.CurrentBuildArea.IncreaseImproveLevel();
+
+        if (tower != null && _buildTowerSystem.CurrentBuildArea.ImproveLevel <= _buildTowerSystem.CurrentBuildArea.MaxImproveLevel)
+        {
+            if (_playerWallet.TrySpendGold(_improveCost))
+            {
+                tower.ImproveDamage(_buildTowerSystem.CurrentBuildArea.ImproveLevel);
+                _improveLevelText.text = _buildTowerSystem.CurrentBuildArea.ImproveLevel.ToString();
+
+                Debug.Log(tower.Damage + " - increase Damage");
             }
         }
     }
@@ -102,6 +115,8 @@ public class BuildScreen : MonoBehaviour
         {
             _secondPanel.SetActive(true);
             _currentImage.sprite = _currentSprite;
+
+            _improveLevelText.text = _buildTowerSystem.CurrentBuildArea.ImproveLevel.ToString();
         }
         else
         {
@@ -117,11 +132,11 @@ public class BuildScreen : MonoBehaviour
                 _towerImages[i].sprite = _buildTowerSystem.TowerSettings.Datas[i].Sprite;
             }
         }
+    }
 
-        //for (int i = 0; i < _towerCostTexts.Count; i++)
-        //{
-        //    _towerCostTexts[i].text = _buildTowerSystem.TowerSettings.Datas[i].Cost.ToString();
-        //}
+    private void ChangeImproveLevel(BuildArea buildArea)
+    {
+        _improveLevelText.text = _buildTowerSystem.CurrentBuildArea.ImproveLevel.ToString();
     }
 
     private void HideBuildScreen()

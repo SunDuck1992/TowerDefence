@@ -14,6 +14,9 @@ public class BuildArea : MonoBehaviour
     private float _pingPongScaleDuration = 1f;
     private float _pingPongHalfScaleDuration = 0.5f;
 
+    private int _improveLevel = 1;
+    private int _maxImproveLevel = 5;
+
     private Vector3 _originalScale;
     private Vector3 _pingPongDesiredScale;
     private Vector3 _pingPongScaleAddition = new Vector3(0.2f, 0.2f, 0);
@@ -31,7 +34,8 @@ public class BuildArea : MonoBehaviour
     public bool OnBuild { get; set; }
     public BuildTowersSystem BuildTowersSystem { get; set; }
     public int WaveLevel => _waveLevel;
-    public int ImproveLevel { get; set; }
+    public int ImproveLevel => _improveLevel;
+    public int MaxImproveLevel => _maxImproveLevel;
 
     private void Awake()
     {
@@ -79,6 +83,11 @@ public class BuildArea : MonoBehaviour
         Debug.Log(_currentTower.name);
         _currentTower.DiedStart?.Invoke(_currentTower);
 
+    }
+
+    public void IncreaseImproveLevel()
+    {
+        _improveLevel++;
     }
 
     private void StartFilling()

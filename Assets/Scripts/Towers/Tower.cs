@@ -11,11 +11,14 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     [SerializeField] private float _damage;
     [SerializeField] private float _fireRate;
     [SerializeField] private float _shootDistance;
+
+    private float _improveDamage = 0.3f;
+    private float _currentDamage;
   
     public float ShootDistance => _shootDistance;
     public Transform TransformTower => _transformTower;
     public Transform ShotPoint => _shotPoint;
-    public float Damage => _damage;
+    public float Damage => _currentDamage;
     public float FireRate => _fireRate;
 
     public IStateMachine StateMachine { get; private set; }
@@ -27,6 +30,7 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     {
         StateMachine = new StateMachine();
         base.Awake();
+        _currentDamage = _damage;
     }
 
     private void Update()
@@ -47,5 +51,10 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     public virtual void Die()
     {
         //StateMachine.SwitchState<DieTowerState, Tower>(this);
+    }
+
+    public void ImproveDamage(int level)
+    {
+        _currentDamage = _damage + (level * _improveDamage);
     }
 }

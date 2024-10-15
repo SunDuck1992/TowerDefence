@@ -54,12 +54,11 @@ public class BuildTowersSystem
 
     public event Action<BuildArea> InteractBuildArea;
     public event Action DeInteractBuildArea;
-    //public event Action DestroedTower;
 
     public void OnInteractBuildArea(BuildArea buildArea)
     {
-        InteractBuildArea?.Invoke(buildArea);
         _currentBuildArea = buildArea;
+        InteractBuildArea?.Invoke(buildArea);
     }
 
     public void OnDeInteractBuildArea()
@@ -70,8 +69,6 @@ public class BuildTowersSystem
 
     public void BuildTower(Tower prefab)
     {
-        //if (_currentBuildArea == null) return;
-
         if (_currentBuildArea.OnBuild) return;
 
         NavMesh.SamplePosition(_currentBuildArea.BuildPoint.position, out var hit, 1, NavMesh.AllAreas);
