@@ -31,6 +31,7 @@ public class BuildArea : MonoBehaviour
     public bool OnBuild { get; set; }
     public BuildTowersSystem BuildTowersSystem { get; set; }
     public int WaveLevel => _waveLevel;
+    public int ImproveLevel { get; set; }
 
     private void Awake()
     {

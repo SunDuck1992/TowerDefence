@@ -10,14 +10,12 @@ public class ShootRocketTowerState : BaseState<RocketTower>
     public GameUnit target;
 
     private Rocket _rocket;
-    private Coroutine _coroutine;
-
     private float _multyplieMassiveDamage = 0.5f;
 
     public override void Enter()
     {
         Debug.LogWarning("Вошли в состояние стрельбы");
-        _coroutine = CoroutineManager.StartStaticCoroutine(SpawnRocketWithDelay());
+        PushRocket();
         Debug.LogWarning("Запустили корутину на спавн ракеты");
     }
 
@@ -33,9 +31,9 @@ public class ShootRocketTowerState : BaseState<RocketTower>
 
         var enemies = enemy.TargetController.GetAllTargets(enemy, 3f, true);
 
-        foreach(var unit in enemies)
+        foreach (var unit in enemies)
         {
-            if(unit != enemy)
+            if (unit != enemy)
             {
                 unit.TakeDamage(_rocket.Damage * _multyplieMassiveDamage);
             }
@@ -48,7 +46,17 @@ public class ShootRocketTowerState : BaseState<RocketTower>
         _rocket.Died -= RocketComplete;
     }
 
-    private void SpawnRocket()
+    private void PushRocket()
+    {
+        if (IsSpawnAreaClear())
+        {
+            PrepareRocket();
+        }
+
+        Owner.StateMachine.SwitchState<ReloadRocketTowerState, RocketTower>(Owner);
+    }
+
+    private void PrepareRocket()
     {
         _rocket = Owner.RocketPool.Spawn();
         _rocket.Target = target;
@@ -62,34 +70,34 @@ public class ShootRocketTowerState : BaseState<RocketTower>
         _rocket.Died += RocketComplete;
     }
 
-    private IEnumerator SpawnRocketWithDelay()
-    {
+    //private IEnumerator SpawnRocketWithDelay()
+    //{
 
-        if (IsSpawnAreaClear())
-        {
-            Debug.LogWarning("Прошли проверку на спавн");
-            SpawnRocket();
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.2f);
+    //    if (IsSpawnAreaClear())
+    //    {
+    //        Debug.LogWarning("Прошли проверку на спавн");
+    //        PrepareRocket();
+    //    }
+    //    else
+    //    {
+    //        yield return new WaitForSeconds(0.2f);
 
-            if (IsSpawnAreaClear())
-            {
-                Debug.LogWarning("Прошли проверку на спавн со 2 раза");
-                SpawnRocket();
-            }
-            else
-            {
-                Debug.LogWarning("Не удалось спавнить ракету из-за препятствий в зоне спавна");
-            }
-        }
+    //        if (IsSpawnAreaClear())
+    //        {
+    //            Debug.LogWarning("Прошли проверку на спавн со 2 раза");
+    //            PrepareRocket();
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning("Не удалось спавнить ракету из-за препятствий в зоне спавна");
+    //        }
+    //    }
 
 
-        yield return new WaitForSeconds(1f);
+    //    yield return new WaitForSeconds(1f);
 
-        CoroutineManager.StopStaticCoroutine(_coroutine);
-        Debug.LogWarning("Перехожу в состояние презарядки");
-        Owner.StateMachine.SwitchState<ReloadRocketTowerState, RocketTower>(Owner);
-    }
+    //    //CoroutineManager.StopStaticCoroutine(_coroutine);
+    //    Debug.LogWarning("Перехожу в состояние презарядки");
+    //    Owner.StateMachine.SwitchState<ReloadRocketTowerState, RocketTower>(Owner);
+    //}
 }

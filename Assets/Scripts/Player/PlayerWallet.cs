@@ -11,7 +11,7 @@ public class PlayerWallet
 
     public PlayerWallet()
     {
-        _gold = 500;
+        _gold = 400;
         _gem = 3;
     }
 

@@ -18,9 +18,6 @@ public class WaveScreen : MonoBehaviour
     private Spawner _spawner;
     private SceneSettings _sceneSettings;
     private EnemyImprover _enemyImprover;
-    //private int _countWawe;
-
-    //public int CountWawe => _countWawe;
 
     public UnityEvent WaveComplete;
     public event Action OnEndBattle;

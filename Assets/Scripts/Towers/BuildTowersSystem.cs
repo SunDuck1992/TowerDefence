@@ -16,7 +16,10 @@ public class BuildTowersSystem
     private WaveScreen _waveScreen;
     private Tower _towerBuild;
 
+    private Dictionary<BuildArea, Tower> _towerAreaLocations = new();
+
     public BuildArea CurrentBuildArea => _currentBuildArea;
+    public Dictionary<BuildArea, Tower> TowerAreaLocations => _towerAreaLocations;
 
     public BuildTowersSystem(SceneSettings sceneSettings, TowerSettings towerSettings, TargetController targetController, BulletPool bulletPool, UISettings uiSettings, PlayerWallet playerWallet, WaveScreen waveScreen, RocketPool rocketPool)
     {
@@ -25,6 +28,7 @@ public class BuildTowersSystem
             sceneSettings.BuildPoints[i].BuildTowersSystem = this;
         }
 
+        
         TowerSettings = towerSettings;
         _targetController = targetController;
         _bulletPool = bulletPool;
@@ -38,6 +42,7 @@ public class BuildTowersSystem
 
         _waveScreen.OnEndBattle += ResetTowerHealth;
         _rocketPool = rocketPool;
+        _targetController.AddTarget(sceneSettings.Base, true);
     }
 
     ~BuildTowersSystem()
@@ -49,7 +54,7 @@ public class BuildTowersSystem
 
     public event Action<BuildArea> InteractBuildArea;
     public event Action DeInteractBuildArea;
-    public event Action DestroedTower;
+    //public event Action DestroedTower;
 
     public void OnInteractBuildArea(BuildArea buildArea)
     {
@@ -60,7 +65,7 @@ public class BuildTowersSystem
     public void OnDeInteractBuildArea()
     {
         DeInteractBuildArea?.Invoke();
-        //_currentBuildArea = null;
+        _currentBuildArea = null;
     }
 
     public void BuildTower(Tower prefab)
@@ -79,6 +84,10 @@ public class BuildTowersSystem
         _targetController.AddTarget(tower, true);
         tower.DiedComplete.AddListener(Destroy);
         _towerBuild = tower;
+
+        _towerAreaLocations.Add(_currentBuildArea, tower);
+
+        Debug.Log(_towerAreaLocations.Count + " - количество зон в листе");
     }
 
     public Tower GetBuildTower()
@@ -113,9 +122,10 @@ public class BuildTowersSystem
     private void Destroy(GameUnit gameUnit)
     {
         gameUnit.DiedComplete.RemoveAllListeners();
-        DestroedTower?.Invoke();
+        //DestroedTower?.Invoke();
         _targetController.RemoveTarget(gameUnit);
         _currentBuildArea.OnBuild = false;
         gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл
+        _towerAreaLocations.Remove(_currentBuildArea);
     }
 }

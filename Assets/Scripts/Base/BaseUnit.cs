@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseUnit : GameUnit
+public class BaseUnit : Tower
 {
    
 }
