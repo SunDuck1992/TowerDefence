@@ -11,6 +11,8 @@ public class ActivateBonusButton : MonoBehaviour
     public UnityEvent<int> EnableBonus;
     public UnityEvent<int> DisableBonus;
 
+    public bool IsActive { get; private set; }
+
     private bool _isButtonPressed = false;
 
     public void ActivateBonus()
@@ -23,6 +25,7 @@ public class ActivateBonusButton : MonoBehaviour
             StartCoroutine(StartTimer());
 
             EnableBonus.Invoke(_cost);
+            IsActive = true;
         }
     }
 
@@ -35,5 +38,6 @@ public class ActivateBonusButton : MonoBehaviour
         StopCoroutine(StartTimer());
 
         DisableBonus.Invoke(_cost);
+        IsActive = false;
     }
 }

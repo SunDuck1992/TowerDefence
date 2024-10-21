@@ -28,6 +28,9 @@ public abstract class GameUnit : MonoBehaviour
         AttackSector = GetComponent<AttackSector>();
     }
 
+    //public virtual void EnableHealParticle() { }
+    
+
     private void OnEnable()
     {
         _health = _maxHealth;

@@ -16,9 +16,13 @@ public class Enemy : GameUnit, IStateMachineOwner
     [SerializeField] private float _damage;
     [SerializeField] private float _duration;
     [SerializeField] private int _award;
+    [SerializeField] private Transform _particlePoint;
+    [SerializeField] private ParticleSystem _deathParticle;
+    [SerializeField] private GameObject _freezePartical;
+
 
     public TargetController TargetController { get; set; }
-    public GameUnit Target {  get; set; }
+    public GameUnit Target { get; set; }
     public Transform TargetAttackPoint { get; set; }
     public NavMeshAgent Agent => _agent;
     public Animator Animator => _animator;
@@ -27,7 +31,7 @@ public class Enemy : GameUnit, IStateMachineOwner
     public float Duration => _duration;
     public int Award => _award;
 
-    public IStateMachine StateMachine {  get; private set; }  
+    public IStateMachine StateMachine { get; private set; }
 
     protected override void Awake()
     {
@@ -62,5 +66,15 @@ public class Enemy : GameUnit, IStateMachineOwner
     public void ChangeSpeedModifyier(float value)
     {
         _agent.speed = value * _speed;
+    }
+
+    public void DeathParticle()
+    {
+        var patricle = Instantiate(_deathParticle, _particlePoint.position, Quaternion.identity);
+    }
+
+    public void SwitchFreezePartical(bool value)
+    {
+        _freezePartical.SetActive(value);
     }
 }

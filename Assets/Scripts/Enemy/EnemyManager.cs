@@ -57,6 +57,7 @@ public class EnemyManager
                 var enemy = _targetController.Enemies[i] as Enemy;
                 enemy.ChangeSpeedModifyier(0.5f);
                 enemy.Animator.SetFloat("Speed", 0.5f);
+                enemy.SwitchFreezePartical(true);
             }
         }
     }
@@ -68,6 +69,7 @@ public class EnemyManager
             var enemy = _targetController.Enemies[i] as Enemy;
             enemy.ChangeSpeedModifyier(1f);
             enemy.Animator.SetFloat("Speed", 1f);
+            enemy.SwitchFreezePartical(false);
         }
     }
 

@@ -11,6 +11,8 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     [SerializeField] private float _damage;
     [SerializeField] private float _fireRate;
     [SerializeField] private float _shootDistance;
+    [SerializeField] private ParticleSystem _healParticle;
+    [SerializeField] private Transform _healParticalPoint;
 
     private float _improveDamage = 0.3f;
     private float _currentDamage;
@@ -56,5 +58,20 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     public void ImproveDamage(int level)
     {
         _currentDamage = _damage + (level * _improveDamage);
+    }
+
+    public void EnableHealParticle()
+    {
+        ParticleSystem particle = Instantiate(_healParticle, _healParticalPoint.position, Quaternion.identity);
+        particle.transform.localScale = _healParticalPoint.localScale;
+        particle.transform.rotation = _healParticalPoint.rotation;
+        StartCoroutine(DestroyParticleAfterDelay(particle, 3f));
+    }
+
+    public IEnumerator DestroyParticleAfterDelay(ParticleSystem particle, float delay)
+    {       
+        yield return new WaitForSeconds(delay);
+
+        Destroy(particle.gameObject);
     }
 }

@@ -15,6 +15,7 @@ public class BuildTowersSystem
     private PlayerWallet _playerWallet;
     private WaveScreen _waveScreen;
     private Tower _towerBuild;
+    private List<Tower> _allTowers = new();
 
     private Dictionary<BuildArea, Tower> _towerAreaLocations = new();
 
@@ -27,7 +28,6 @@ public class BuildTowersSystem
         {
             sceneSettings.BuildPoints[i].BuildTowersSystem = this;
         }
-
         
         TowerSettings = towerSettings;
         _targetController = targetController;
@@ -43,6 +43,7 @@ public class BuildTowersSystem
         _waveScreen.OnEndBattle += ResetTowerHealth;
         _rocketPool = rocketPool;
         _targetController.AddTarget(sceneSettings.Base, true);
+        _allTowers.Add(sceneSettings.Base); // временно
     }
 
     ~BuildTowersSystem()
@@ -84,6 +85,8 @@ public class BuildTowersSystem
 
         _towerAreaLocations.Add(_currentBuildArea, tower);
 
+        _allTowers.Add(tower); // временно
+
         Debug.Log(_towerAreaLocations.Count + " - количество зон в листе");
     }
 
@@ -94,15 +97,28 @@ public class BuildTowersSystem
 
     private void RepairTowers(int cost)
     {
-        if (_playerWallet.TrySpendGem(cost))
-        {
-            for (int i = 0; i < _targetController.Towers.Count; i++)
-            {
-                var tower = _targetController.Towers[i];
+        //if (_playerWallet.TrySpendGem(cost))
+        //{
+        //    for (int i = 0; i < _targetController.Towers.Count; i++)
+        //    {
+        //        var tower = _targetController.Towers[i]/* as Tower*/;
 
-                Debug.Log(tower.Health + " - Towere here");
+
+        //        Debug.Log(tower.name);
+
+        //        tower.ResetHealth();
+        //        //tower.EnableHealParticle();
+        //    }
+        //}
+
+        if (_playerWallet.TrySpendGem(cost))             // временное решение ? а может и нет
+        {
+            for (int i = 0; i < _allTowers.Count; i++)
+            {
+                var tower = _allTowers[i];
 
                 tower.ResetHealth();
+                tower.EnableHealParticle();
             }
         }
     }

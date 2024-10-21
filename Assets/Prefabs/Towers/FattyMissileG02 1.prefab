@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2742665809674649743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8763379686163124269}
+  m_Layer: 0
+  m_Name: HealParticlePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8763379686163124269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742665809674649743}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.434, z: 0}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9028677711473811260}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &3774297861470738779
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +231,7 @@ Transform:
   - {fileID: 4613025936717067559}
   - {fileID: 374759730358108297}
   - {fileID: 5744234508092146016}
+  - {fileID: 8763379686163124269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1660129653782035503
@@ -238,6 +270,8 @@ MonoBehaviour:
   _damage: 3
   _fireRate: 2
   _shootDistance: 50
+  _healParticle: {fileID: 8007564940020109494, guid: 6095f29b69a59c94fad08159d79cd4ae, type: 3}
+  _healParticalPoint: {fileID: 8763379686163124269}
 --- !u!114 &5323818135748279708
 MonoBehaviour:
   m_ObjectHideFlags: 0

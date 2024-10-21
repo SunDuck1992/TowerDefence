@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDieState : BaseState<Enemy>
 {
-    private float _timer = 2f;
+    private float _timer = 1.5f;
     private bool _hasDied;
 
     public override void Enter()
@@ -24,7 +24,8 @@ public class EnemyDieState : BaseState<Enemy>
         {
             if (Owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                _hasDied = true; 
+                _hasDied = true;
+                Owner.DeathParticle();
             }
         }
 
