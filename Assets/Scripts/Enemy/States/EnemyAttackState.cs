@@ -22,11 +22,11 @@ public class EnemyAttackState : BaseState<Enemy>
 
     private void OnAttack()
     {
+        Owner.CreateHitParticle();
         Owner.Target.TakeDamage(Owner.Damage);
         Owner.Target.AttackSector.freePoints.Push(Owner.TargetAttackPoint);
         Owner.TargetAttackPoint = null;
         Owner.StateMachine.SwitchState<EnemyIdleState, Enemy>(Owner);
-
     }
 
 }

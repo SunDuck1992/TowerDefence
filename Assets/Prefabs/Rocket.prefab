@@ -116,6 +116,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1206402789739125714}
+  - {fileID: 6749136237834629526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-6709455849996251092
@@ -132,6 +133,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _duration: 0.7
+  _fire: {fileID: 6749136237834629526}
+  _flyParticle: {fileID: 4238211373066700831, guid: d0543a32ab147d1458506d5a37a17bb4, type: 3}
+  _hitParticle: {fileID: 8852025061485405890, guid: f2db3c3d876a7d04988b1748e8babde8, type: 3}
 --- !u!54 &8062113613477178326
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -180,3 +184,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.40048218, y: 0.5600281, z: 0.9244385}
   m_Center: {x: 0.0019378662, y: -0.011703491, z: 0.050827026}
+--- !u!1 &9021866428966357559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6749136237834629526}
+  m_Layer: 7
+  m_Name: Fire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6749136237834629526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9021866428966357559}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.463}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6120047584661327274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

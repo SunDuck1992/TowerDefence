@@ -15,6 +15,8 @@ public class ShootMashineGunTowerState : BaseState<MashineGunTower>
         _bullet.transform.forward = Owner.ShotPoint.forward;
         _bullet.Damage = Owner.Damage;
 
+        Owner.CreateShootparticle();
+
         _bullet.HitTower += OnHit;
         _bullet.Died += BulletComplete;
 

@@ -25,7 +25,7 @@ public class EnemyDieState : BaseState<Enemy>
             if (Owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 _hasDied = true;
-                Owner.DeathParticle();
+                Owner.CreateDeathParticle();
             }
         }
 

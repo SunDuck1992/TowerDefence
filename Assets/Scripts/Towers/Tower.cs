@@ -12,6 +12,7 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     [SerializeField] private float _fireRate;
     [SerializeField] private float _shootDistance;
     [SerializeField] private ParticleSystem _healParticle;
+    [SerializeField] private ParticleSystem _shootParticle;
     [SerializeField] private Transform _healParticalPoint;
 
     private float _improveDamage = 0.3f;
@@ -20,6 +21,7 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     public float ShootDistance => _shootDistance;
     public Transform TransformTower => _transformTower;
     public Transform ShotPoint => _shotPoint;
+    public BuildArea BuildArea { get; set; }
     public float Damage => _currentDamage;
     public float FireRate => _fireRate;
 
@@ -66,6 +68,11 @@ public abstract class Tower : GameUnit, IStateMachineOwner
         particle.transform.localScale = _healParticalPoint.localScale;
         particle.transform.rotation = _healParticalPoint.rotation;
         StartCoroutine(DestroyParticleAfterDelay(particle, 3f));
+    }
+
+    public void CreateShootparticle()
+    {
+        Instantiate(_shootParticle, ShotPoint.position, Quaternion.LookRotation(ShotPoint.forward));
     }
 
     public IEnumerator DestroyParticleAfterDelay(ParticleSystem particle, float delay)

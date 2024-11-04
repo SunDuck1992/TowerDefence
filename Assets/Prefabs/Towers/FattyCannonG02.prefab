@@ -5300,6 +5300,7 @@ MonoBehaviour:
   _fireRate: 0.5
   _shootDistance: 15
   _healParticle: {fileID: 8007564940020109494, guid: 6095f29b69a59c94fad08159d79cd4ae, type: 3}
+  _shootParticle: {fileID: 2590764549968227446, guid: 5ef787130dae1f64c86c1b914cc9a5f5, type: 3}
   _healParticalPoint: {fileID: 2404476052196959735}
 --- !u!114 &4282684160171363880
 MonoBehaviour:

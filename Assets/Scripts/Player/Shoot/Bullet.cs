@@ -7,6 +7,7 @@ using Zenject.SpaceFighter;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private ParticleSystem _hitBulletParticle;
 
     public float Damage {  get; set; }
 
@@ -35,6 +36,8 @@ public class Bullet : MonoBehaviour
 
         if (enemy != null)
         {
+            Instantiate(_hitBulletParticle, enemy.DeathParticlePoint.position, Quaternion.identity);
+
             Hit?.Invoke(enemy);
             HitTower?.Invoke(enemy);
             Died?.Invoke(this);

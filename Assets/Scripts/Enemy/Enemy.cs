@@ -16,14 +16,17 @@ public class Enemy : GameUnit, IStateMachineOwner
     [SerializeField] private float _damage;
     [SerializeField] private float _duration;
     [SerializeField] private int _award;
-    [SerializeField] private Transform _particlePoint;
+    [SerializeField] private Transform _deathParticlePoint;
+    [SerializeField] private Transform _hitParticlePoint;
     [SerializeField] private ParticleSystem _deathParticle;
+    [SerializeField] private ParticleSystem _hitParticle;
     [SerializeField] private GameObject _freezePartical;
 
 
     public TargetController TargetController { get; set; }
     public GameUnit Target { get; set; }
     public Transform TargetAttackPoint { get; set; }
+    public Transform DeathParticlePoint => _deathParticlePoint;
     public NavMeshAgent Agent => _agent;
     public Animator Animator => _animator;
     public AnimationEventListener Listener => _listener;
@@ -68,9 +71,14 @@ public class Enemy : GameUnit, IStateMachineOwner
         _agent.speed = value * _speed;
     }
 
-    public void DeathParticle()
+    public void CreateDeathParticle()
     {
-        var patricle = Instantiate(_deathParticle, _particlePoint.position, Quaternion.identity);
+        var patricle = Instantiate(_deathParticle, _deathParticlePoint.position, Quaternion.identity);
+    }
+
+    public void CreateHitParticle()
+    {
+        Instantiate(_hitParticle, _hitParticlePoint.position, Quaternion.LookRotation(_hitParticlePoint.forward));
     }
 
     public void SwitchFreezePartical(bool value)

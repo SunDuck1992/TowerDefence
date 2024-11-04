@@ -14,6 +14,8 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private Rotate _rotate;
     [SerializeField] private GameUnit _self;
     [SerializeField] private float _multyplieChangåCharacteristickValue;
+    [SerializeField] private ParticleSystem _hitBulletParticle;
+    [SerializeField] private ParticleSystem _massiveHitBulletParticle;
 
     public Weapon CurrentWeapon { get; private set; }
 
@@ -156,11 +158,13 @@ public class PlayerShooter : MonoBehaviour
             {
                 if (e != enemy)
                 {
+                    Instantiate(_massiveHitBulletParticle, enemy.DeathParticlePoint.position, Quaternion.identity);
                     e.TakeDamage(_damage * 0.7f);
                 }
             }
         }
 
+        //Instantiate(_hitBulletParticle, enemy.DeathParticlePoint.position, Quaternion.identity);
         enemy.TakeDamage(_damage);
     }
 

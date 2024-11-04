@@ -8,6 +8,9 @@ public class Rocket : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _duration;
+    [SerializeField] private Transform _fire;
+    [SerializeField] private ParticleSystem _flyParticle;
+    [SerializeField] private ParticleSystem _hitParticle;
 
     private float _elapsedTime = 0;
     private Enemy _enemy;
@@ -25,7 +28,7 @@ public class Rocket : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("SelfDestraction", 5f);
+        Invoke("SelfDestraction", 7f);
         timer = 0.3f;
         StartCoroutine(FlyToTarget());
     }
@@ -64,13 +67,15 @@ public class Rocket : MonoBehaviour
         {
             _enemy = enemy;
             HitTower?.Invoke(enemy);
-            //gameObject.SetActive(false);
+
+            Instantiate(_hitParticle, enemy.DeathParticlePoint.position, Quaternion.identity);
+
             StopCoroutine(FlyToTarget());
             Died?.Invoke(this);
             //_isEnter = true;
         }
 
-        new WaitForSeconds(0.1f);
+        //new WaitForSeconds(0.1f);
 
         //Debug.LogWarning($"Triggering {other.gameObject.name}");
 
@@ -91,8 +96,8 @@ public class Rocket : MonoBehaviour
     private void SelfDestraction()
     {
         _isEnter = false;
-        //Died?.Invoke(this);
-        gameObject.SetActive(false);
+        Died?.Invoke(this);
+        //gameObject.SetActive(false);
     }
 
     public IEnumerator FlyToTarget()
@@ -106,6 +111,10 @@ public class Rocket : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        ParticleSystem particleEffect = Instantiate(_flyParticle, _fire.position, Quaternion.LookRotation(-_fire.forward));
+        particleEffect.transform.parent = _fire;
+
 
         while (Target != null)
         {

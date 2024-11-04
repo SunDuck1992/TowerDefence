@@ -74,15 +74,18 @@ public class BuildTowersSystem
 
         NavMesh.SamplePosition(_currentBuildArea.BuildPoint.position, out var hit, 1, NavMesh.AllAreas);
         Tower tower = MonoBehaviour.Instantiate(prefab, hit.position, Quaternion.identity);
+
         tower.TargetController = _targetController;
         tower.BulletPool = _bulletPool;
         tower.RocketPool = _rocketPool;
         tower.Enable();
+
+        tower.BuildArea = _currentBuildArea;
         _currentBuildArea.OnBuild = true;
         _targetController.AddTarget(tower, true);
         tower.DiedComplete.AddListener(Destroy);
         _towerBuild = tower;
-
+        
         _towerAreaLocations.Add(_currentBuildArea, tower);
 
         _allTowers.Add(tower); // временно
@@ -97,20 +100,6 @@ public class BuildTowersSystem
 
     private void RepairTowers(int cost)
     {
-        //if (_playerWallet.TrySpendGem(cost))
-        //{
-        //    for (int i = 0; i < _targetController.Towers.Count; i++)
-        //    {
-        //        var tower = _targetController.Towers[i]/* as Tower*/;
-
-
-        //        Debug.Log(tower.name);
-
-        //        tower.ResetHealth();
-        //        //tower.EnableHealParticle();
-        //    }
-        //}
-
         if (_playerWallet.TrySpendGem(cost))             // временное решение ? а может и нет
         {
             for (int i = 0; i < _allTowers.Count; i++)
@@ -135,10 +124,20 @@ public class BuildTowersSystem
     private void Destroy(GameUnit gameUnit)
     {
         gameUnit.DiedComplete.RemoveAllListeners();
+
+        if(gameUnit is Tower tower)
+        {
+            BuildArea buildArea = tower.BuildArea;
+
+            if(buildArea != null)
+            {
+                buildArea.OnBuild = false;
+                _towerAreaLocations.Remove(buildArea);
+            }
+        }
+
         //DestroedTower?.Invoke();
         _targetController.RemoveTarget(gameUnit);
-        _currentBuildArea.OnBuild = false;
-        gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл
-        _towerAreaLocations.Remove(_currentBuildArea);
+        gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл        
     }
 }
