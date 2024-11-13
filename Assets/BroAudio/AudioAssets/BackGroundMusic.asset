@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0345f6968f9c4241959624889b545dd, type: 3}
+  m_Name: BackGroundMusic
+  m_EditorClassIdentifier: 
+  Entities:
+  - <Name>k__BackingField: "\u0414\u043E\u043A\u0442\u043E\u0440 \u041B\u0438\u0432\u0441\u0438
+      \u0438\u0434\u0451\u0442 (\u0447\u0438\u0441\u0442\u043E \u0444\u043E\u043D\u043A)
+      (mp3cut.net) (1)"
+    <ID>k__BackingField: 268435458
+    MulticlipsPlayMode: 0
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 77634543f182aba47b75b93682d3c7d7, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0.507
+      EndPosition: 3.552
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 1
+    <TransitionTime>k__BackingField: -1
+    <SpatialSetting>k__BackingField: {fileID: 11400000, guid: 6774f088bbdd76e42a983e6fd90315f6, type: 2}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  <AssetName>k__BackingField: BackGroundMusic
+  _assetGUID: 092519656f65bec48848d80021ecd03c
