@@ -12,12 +12,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private ParticleSystem _flyParticle;
     [SerializeField] private ParticleSystem _hitParticle;
 
-    private float _elapsedTime = 0;
-    private Enemy _enemy;
-    private bool _isEnter = false;
-
-    private float timer;
-    private float clock;
+    private ParticleSystem _particle;
 
     public float Speed => _speed;
     public float Damage { get; set; }
@@ -29,7 +24,6 @@ public class Rocket : MonoBehaviour
     private void OnEnable()
     {
         Invoke("SelfDestraction", 7f);
-        timer = 0.3f;
         StartCoroutine(FlyToTarget());
     }
 
@@ -39,65 +33,30 @@ public class Rocket : MonoBehaviour
         ClearEvents();
     }
 
-    //private void Update()
-    //{
-    //    if (_isEnter)
-    //    {
-    //        timer -= Time.deltaTime;
-
-    //        if (timer <= 0)
-    //        {
-    //            SelfDestraction();
-    //        }
-    //    }
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.LogWarning($"Triggering {other.gameObject.name}");
-        //Enemy enemy = other.GetComponent<Enemy>();
-
-        //if(enemy != null)
-        //{
-        //    HitTower?.Invoke(enemy);
-        //    Died?.Invoke(this);
-        //}
 
         if (other.TryGetComponent<Enemy>(out var enemy))
         {
-            _enemy = enemy;
             HitTower?.Invoke(enemy);
 
             Instantiate(_hitParticle, enemy.DeathParticlePoint.position, Quaternion.identity);
 
+            if (_particle != null)
+            {
+                Destroy(_particle.gameObject);
+                _particle = null;
+            }
+
             StopCoroutine(FlyToTarget());
             Died?.Invoke(this);
-            //_isEnter = true;
         }
-
-        //new WaitForSeconds(0.1f);
-
-        //Debug.LogWarning($"Triggering {other.gameObject.name}");
-
-        //// Игнорируем собственные столкновения
-        //if (other.gameObject == gameObject)
-        //    return;
-
-        //// Проверяем, что это враг
-        //if (other.TryGetComponent<Enemy>(out var enemy))
-        //{
-        //    HitTower?.Invoke(enemy);
-        //    Died?.Invoke(this);
-        //    // Дополнительно: чтобы предотвратить дальнейшее взаимодействие
-        //    // можно отключить объект ракеты, если это необходимо
-        //}
     }
 
     private void SelfDestraction()
     {
-        _isEnter = false;
         Died?.Invoke(this);
-        //gameObject.SetActive(false);
     }
 
     public IEnumerator FlyToTarget()
@@ -106,19 +65,18 @@ public class Rocket : MonoBehaviour
 
         while (elapsedTime < _duration)
         {
-            Debug.LogWarning("Лечу вверх");
+            Debug.Log("Лечу вверх");
             transform.Translate(Vector3.forward * _speed * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        ParticleSystem particleEffect = Instantiate(_flyParticle, _fire.position, Quaternion.LookRotation(-_fire.forward));
-        particleEffect.transform.parent = _fire;
-
+        _particle = Instantiate(_flyParticle, _fire.position, Quaternion.LookRotation(-_fire.forward));
+        _particle.transform.parent = _fire;
 
         while (Target != null)
         {
-            Debug.LogWarning("Лечу к цели");
+            Debug.Log("Лечу к цели");
             Vector3 direction = (Target.transform.position - transform.position).normalized;
             transform.position += direction * _speed * Time.deltaTime;
 

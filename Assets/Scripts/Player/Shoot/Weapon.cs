@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ami.BroAudio;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private Transform _weaponPoint;
     [SerializeField] private IKControl _IKControls;
     [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private SoundID _soundID;
     [SerializeField] private float _changeFirerateValue;
     [SerializeField] private float _changeDamageValue;
 
@@ -32,6 +34,7 @@ public abstract class Weapon : MonoBehaviour
 
         CreateBullet(bullet);
         Instantiate(_particleSystem, _weaponPoint.position, Quaternion.LookRotation(_weaponPoint.forward));
+        BroAudio.Play(_soundID);
     }
 
     public void Activate()
