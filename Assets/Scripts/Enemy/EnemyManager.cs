@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyManager
 {
@@ -78,12 +79,12 @@ public class EnemyManager
         var enemy = gameUnit as Enemy;
         gameUnit.DiedComplete.RemoveAllListeners();
         EnemyDied?.Invoke();
-       
-        _playerWallet.AddGold(enemy.Award);
     }
 
     private void CleanTarget(GameUnit gameUnit)
     {
+        var enemy = gameUnit as Enemy;
         _targetController.RemoveTarget(gameUnit);
+        _playerWallet.AddGold(enemy.Award);
     }
 }

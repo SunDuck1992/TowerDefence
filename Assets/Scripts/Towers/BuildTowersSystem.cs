@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using YG;
 
 public class BuildTowersSystem
 {
@@ -41,6 +42,9 @@ public class BuildTowersSystem
         _uiSettings.RepairTowersButton.DisableBonus.AddListener(RepairTowers);
 
         _waveScreen.OnEndBattle += ResetTowerHealth;
+        _waveScreen.OnEndBattle += _playerWallet.SaveWallet;
+        _waveScreen.OnEndBattle += YandexGame.SaveProgress;
+
         _rocketPool = rocketPool;
         _targetController.AddTarget(sceneSettings.Base, true);
         _allTowers.Add(sceneSettings.Base); // временно
@@ -49,6 +53,8 @@ public class BuildTowersSystem
     ~BuildTowersSystem()
     {
         _waveScreen.OnEndBattle -= ResetTowerHealth;
+        _waveScreen.OnEndBattle -= _playerWallet.SaveWallet;
+        _waveScreen.OnEndBattle -= YandexGame.SaveProgress;
     }
 
     public TowerSettings TowerSettings { get; }

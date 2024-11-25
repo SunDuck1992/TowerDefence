@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using YG;
 
 public class PlayerWallet
 {
@@ -11,8 +12,12 @@ public class PlayerWallet
 
     public PlayerWallet()
     {
-        _gold = 1000;
-        _gem = 3;
+        YandexGame.GetDataEvent += SetValue;
+    }
+
+    ~PlayerWallet()
+    {
+        YandexGame.GetDataEvent -= SetValue;
     }
 
     public int Gold => _gold;
@@ -58,5 +63,34 @@ public class PlayerWallet
             return true;
         }
         return false;
+    }
+
+    public void SaveWallet()
+    {
+        YandexGame.savesData.gold = _gold;
+        YandexGame.savesData.gem = _gem;
+    }
+
+    private void SetValue()
+    {
+        _gold = YandexGame.savesData.gold;
+
+        if (YandexGame.savesData.gold == -1)
+        {
+            _gold = 800;
+        }
+        else
+        {
+            _gold = YandexGame.savesData.gold;
+        }
+
+        if (YandexGame.savesData.gem == -1)
+        {
+            _gem = 3;
+        }
+        else
+        {
+            _gem = YandexGame.savesData.gem;
+        }
     }
 }

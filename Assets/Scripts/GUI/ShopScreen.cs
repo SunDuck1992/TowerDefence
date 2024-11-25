@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 using Zenject;
 
 public class ShopScreen : MonoBehaviour
@@ -29,7 +30,17 @@ public class ShopScreen : MonoBehaviour
 
     private void Start()
     {
-        LoadSettings();
+        for (int i = 0; i < _items.Count; i++)
+        {
+            _items[i].isBuyed = YandexGame.savesData.weaponsIsBuyed[i];
+
+            if (_items[i].isBuyed == true)
+            {
+                ChangeButtonSprite(i);
+            }
+        }
+
+        //LoadSettings();
     }
 
     public void ChangeWeaponButtonClick(int index)
@@ -48,6 +59,7 @@ public class ShopScreen : MonoBehaviour
                 _playerShooter.ChangeWeapon(index);
                 ChangeButtonSprite(index);
                 item.isBuyed = true;
+                YandexGame.savesData.weaponsIsBuyed[index] = item.isBuyed;
             }
             else
             {

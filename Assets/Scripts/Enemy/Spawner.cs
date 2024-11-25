@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using YG;
 
 public class Spawner : MonoBehaviour
 {
     //[SerializeField] private List<Transform> _points;
 
-    private int _countEnemies = 3;
+    private int _countEnemies;
 
     private EnemyManager _enemyManager;
     private SceneSettings _sceneSettings;
@@ -22,6 +23,27 @@ public class Spawner : MonoBehaviour
         _sceneSettings = sceneSettings;
     }
 
+    private void Start()
+    {
+        if(YandexGame.savesData.enemyCount == -1)
+        {
+            _countEnemies = 3;
+        }
+        else
+        {
+            _countEnemies = YandexGame.savesData.enemyCount;
+        }
+
+        if(YandexGame.savesData.waveCount == -1)
+        {
+            WaveCount = 0;
+        }
+        else
+        {
+            WaveCount = YandexGame.savesData.waveCount;
+        }
+    }
+
     public void SpawnOnClick()
     {
         Transform point = _sceneSettings.Points[Random.Range(0, _sceneSettings.Points.Count)];
@@ -34,5 +56,8 @@ public class Spawner : MonoBehaviour
         MaxCountEnemies = _countEnemies;
         WaveCount++;
         _countEnemies += 1;
+
+        YandexGame.savesData.waveCount = WaveCount;
+        YandexGame.savesData.enemyCount = _countEnemies;
     }
 }

@@ -6,6 +6,7 @@ using Zenject;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using YG;
 
 public class WaveScreen : MonoBehaviour
 {
@@ -50,6 +51,16 @@ public class WaveScreen : MonoBehaviour
     {
         _spawner.SpawnOnClick();
         _countEnemiesProgressText.text = $"{0} / {_spawner.MaxCountEnemies}";
+
+        //if(YandexGame.savesData.waveCount == -1)
+        //{
+        //    _countWavetext.text = _spawner.WaveCount.ToString();
+        //}
+        //else
+        //{
+        //    _countWavetext.text = YandexGame.savesData.waveCount.ToString();
+        //}
+
         _countWavetext.text = _spawner.WaveCount.ToString();
         _progressWaveBar.maxValue = _spawner.MaxCountEnemies;
         _progressWaveBar.value = 0;
@@ -58,7 +69,6 @@ public class WaveScreen : MonoBehaviour
         {
             _sceneSettings.BuildPoints[i].gameObject.SetActive(false);
         }
-
     }
 
     private void UpdateProgressBar()
