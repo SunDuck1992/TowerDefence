@@ -14,10 +14,20 @@ public class Player : GameUnit
 
     private void Start()
     {
-        if(YandexGame.savesData.playerHealth > 1f)
+        //if(YandexGame.savesData.playerHealth > 1f)
+        //{
+        //    _maxHealth = YandexGame.savesData.playerHealth;
+        //}
+        
+        if(YandexGame.savesData.upgradeHealthLevel == -1)
         {
-            _maxHealth = YandexGame.savesData.playerHealth;
-        }       
+            //_maxHealth += _changeHealthValue * YandexGame.savesData.upgradeHealthLevel;
+            //Debug.Log("Save Upgrade Health == -1");
+        }
+        else
+        {
+            _maxHealth += _changeHealthValue * YandexGame.savesData.upgradeHealthLevel;
+        }
     }
 
     [Inject]
@@ -36,11 +46,11 @@ public class Player : GameUnit
 
     private void IncreaseHealth()
     {
-        if(_maxIncreaseHealthLevel >= _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value)
+        if(_maxIncreaseHealthLevel >= YandexGame.savesData.upgradeHealthLevel)
         {
             _maxHealth += _changeHealthValue;
-            YandexGame.savesData.playerHealth = _maxHealth;
-            YandexGame.SaveProgress();
+            //YandexGame.savesData.playerHealth = _maxHealth;
+            //YandexGame.SaveProgress();
             //Debug.Log("maxHealth - " + _maxHealth + ", healthIncreaseLevelValue - " + _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + ", maxIncreaseHealthLevel - " + _maxIncreaseHealthLevel);
             //Debug.Log(_playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + " - UpgradeLevel");
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 [Serializable]
 public class UpgradeData
@@ -14,6 +15,24 @@ public class UpgradeData
 
 public class PlayerUpgradeSystem
 {
+    public PlayerUpgradeSystem()
+    {
+        if (YandexGame.savesData.upgradeDamageLevel != -1)
+        {
+            UpgradeData.UpgradeDamageLevel.Value = YandexGame.savesData.upgradeDamageLevel;
+        }
+
+        if (YandexGame.savesData.upgradeSpeedWeaponLevel != -1)
+        {
+            UpgradeData.UpgradeShootSpeedLevel.Value = YandexGame.savesData.upgradeSpeedWeaponLevel;
+        }
+
+        if (YandexGame.savesData.upgradeHealthLevel != -1)
+        {
+            UpgradeData.UpgradeHealthLevel.Value = YandexGame.savesData.upgradeHealthLevel;
+        }
+    }
+
     public UpgradeData UpgradeData { get; private set; } = new UpgradeData();
 
     public void ApplyUpgrade(Upgrade upgrade)
@@ -21,19 +40,55 @@ public class PlayerUpgradeSystem
         switch (upgrade)
         {
             case Upgrade.Damage:
-                UpgradeData.UpgradeDamageLevel.Value++;
+
+                if (YandexGame.savesData.upgradeDamageLevel == -1)
+                {
+                    YandexGame.savesData.upgradeDamageLevel = 1;
+                    UpgradeData.UpgradeDamageLevel.Value = 1;
+                }
+                else
+                {
+                    YandexGame.savesData.upgradeDamageLevel++;
+                    UpgradeData.UpgradeDamageLevel.Value++;
+                }
+
                 break;
 
             case Upgrade.ShootSpeed:
-                UpgradeData.UpgradeShootSpeedLevel.Value++;
+
+                if (YandexGame.savesData.upgradeSpeedWeaponLevel == -1)
+                {
+                    YandexGame.savesData.upgradeSpeedWeaponLevel = 1;
+                    UpgradeData.UpgradeShootSpeedLevel.Value = 1;
+                }
+                else
+                {
+                    YandexGame.savesData.upgradeSpeedWeaponLevel++;
+                    UpgradeData.UpgradeShootSpeedLevel.Value++;
+                }
+
                 break;
 
             case Upgrade.Health:
-                //Debug.Log(UpgradeData.UpgradeHealthLevel.Value + " - значение Value до изменения");
-                UpgradeData.UpgradeHealthLevel.Value++;
+
+                if (YandexGame.savesData.upgradeHealthLevel == -1)
+                {
+                    YandexGame.savesData.upgradeHealthLevel = 1;
+                    UpgradeData.UpgradeHealthLevel.Value = 1;
+
+                    YandexGame.SaveProgress();
+                }
+                else
+                {
+                    YandexGame.savesData.upgradeHealthLevel++;
+                    UpgradeData.UpgradeHealthLevel.Value++;
+
+                    YandexGame.SaveProgress();
+                }
+
                 break;
         }
     }
 
-    
+
 }

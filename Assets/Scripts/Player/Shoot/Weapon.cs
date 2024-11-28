@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ami.BroAudio;
+using YG;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -67,6 +68,8 @@ public abstract class Weapon : MonoBehaviour
             //Debug.Log("MaxLevelIncreased");
         }
 
+        //YandexGame.savesData.weaponSpeed = firerate;
+
         return firerate;
     }
 
@@ -86,6 +89,8 @@ public abstract class Weapon : MonoBehaviour
             //Debug.Log(_maxIncreaseFirerateLevel + " - maxIncreaseLevel, " + UpgradeLevelValue + " - UpgradeLevel");
             //Debug.Log("MaxLevelIncreased");
         }
+
+        //YandexGame.savesData.weaponDamage = damage;
 
         return damage;
     }

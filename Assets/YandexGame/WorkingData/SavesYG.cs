@@ -20,7 +20,7 @@ namespace YG
 
         // Ваши сохранения
 
-        public float playerHealth; // +
+        public float playerHealth; 
         public float weaponDamage;
         public float weaponSpeed;
         public int gold = -1;  // +
@@ -28,6 +28,10 @@ namespace YG
 
         public int waveCount = -1; // +
         public int enemyCount = -1; // +
+
+        public int upgradeDamageLevel = -1; // +
+        public int upgradeSpeedWeaponLevel = -1; // +
+        public int upgradeHealthLevel = -1; // +
 
         public List<bool> weaponsIsBuyed = new List<bool>(new bool[3]);
 
