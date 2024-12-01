@@ -9,7 +9,6 @@ public class UpgradeScreen : MonoBehaviour
 
     private PlayerUpgradeSystem _playerUpgradeSystem;
 
-
     [Inject]
     public void Construct(PlayerUpgradeSystem playerUpgradeSystem)
     {

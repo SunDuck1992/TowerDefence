@@ -1,5 +1,5 @@
 {
-    "idSave": 4,
+    "idSave": 2,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -13,16 +13,18 @@
     "playerHealth": 0.0,
     "weaponDamage": 0.0,
     "weaponSpeed": 0.0,
-    "gold": 160,
-    "gem": 3,
-    "waveCount": 1,
-    "enemyCount": 4,
+    "gold": -1,
+    "gem": -1,
+    "waveCount": -1,
+    "enemyCount": -1,
     "upgradeDamageLevel": -1,
     "upgradeSpeedWeaponLevel": -1,
-    "upgradeHealthLevel": 1,
+    "upgradeHealthLevel": 2,
+    "weaponIndex": -1,
+    "UpgradeLevelTower": 2,
     "weaponsIsBuyed": [
         true,
         false,
-        true
+        false
     ]
 }

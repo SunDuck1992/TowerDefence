@@ -58,7 +58,7 @@ public abstract class Weapon : MonoBehaviour
         if (_maxIncreaseFirerateLevel >= UpgradeLevelValue)
         {
             firerate = _firerate - (_changeFirerateValue * UpgradeLevelValue);
-            //Debug.Log(_maxIncreaseFirerateLevel + " - maxIncreaseLevel, " +  UpgradeLevelValue + " - UpgradeLevel");
+            Debug.LogWarning(firerate + " - firerate   Weapon");
         }
         else
         {
@@ -80,7 +80,7 @@ public abstract class Weapon : MonoBehaviour
         if (_maxIncreaseDamageLevel >= UpgradeLevelValue)
         {
             damage = _damage + (_changeDamageValue * UpgradeLevelValue);
-            //Debug.Log(_maxIncreaseFirerateLevel + " - maxIncreaseLevel, " + UpgradeLevelValue + " - UpgradeLevel");
+            Debug.LogWarning(damage + " - damage  Weapon");
         }
         else
         {

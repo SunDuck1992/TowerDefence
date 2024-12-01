@@ -97,12 +97,6 @@ public class BuildScreen : MonoBehaviour
         }
     }
 
-    //public void OnCkickBool()
-    //{
-    //    _isBuyeds[0] = false;
-    //    ChangeButtonSprite(0);
-    //}
-
     private void OnDestroy()
     {
         _buildTowerSystem.InteractBuildArea -= ShowBuildScreen;

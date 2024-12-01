@@ -33,6 +33,9 @@ namespace YG
         public int upgradeSpeedWeaponLevel = -1; // +
         public int upgradeHealthLevel = -1; // +
 
+        public int weaponIndex = -1;
+        public int UpgradeLevelTower = -1;
+
         public List<bool> weaponsIsBuyed = new List<bool>(new bool[3]);
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны

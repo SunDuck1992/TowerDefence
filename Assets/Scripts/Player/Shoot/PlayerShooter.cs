@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 using Zenject;
 
 public class PlayerShooter : MonoBehaviour
 {
     public const float Radius = 5f;
 
-    //[SerializeField] private float _couldown;
     [SerializeField] private Animator _weaponAnimator;
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Transform _view;
@@ -30,7 +30,6 @@ public class PlayerShooter : MonoBehaviour
     private PlayerWallet _playerWallet;
     private float _couldown;
 
-
     public bool IsShooting { get; private set; }
 
     [Inject]
@@ -42,6 +41,14 @@ public class PlayerShooter : MonoBehaviour
         _playerWallet = playerWallet;
         _playerUpgradeSystem = playerUpgradeSystem;
         _damage = gameConfigProxy.Config.PlayerConfig.Damage;
+
+        //if(YandexGame.savesData.weaponIndex != -1)
+        //{
+        //    _weaponIndex = YandexGame.savesData.weaponIndex;
+        //    Debug.LogWarning("weapon index - " +  _weaponIndex);
+        //}
+
+        YandexGame.GetDataEvent += SetCurrentWeapon;
 
         _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged += UpdateDamage;
         _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.ValueChanged += UpdateShootSpeed;
@@ -56,6 +63,8 @@ public class PlayerShooter : MonoBehaviour
     {
         _uISettings.MassDamageButton.EnableBonus.RemoveAllListeners();
         _uISettings.MassDamageButton.DisableBonus.RemoveAllListeners();
+
+        YandexGame.GetDataEvent -= SetCurrentWeapon;
     }
 
     public void ChangeWeapon(int indexWeapon)
@@ -139,13 +148,13 @@ public class PlayerShooter : MonoBehaviour
     public void UpdateShootSpeed()
     {
         _couldown = CurrentWeapon.ChangeFirerate(_playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value);
-        //Debug.Log(_couldown + " - firerate");
+        Debug.Log(_couldown + " - firerate");
     }
 
     private void UpdateDamage()
     {
         _damage = CurrentWeapon.ChangeDamage(_playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value);
-        //Debug.Log(_damage + " - damage");
+        Debug.Log(_damage + " - damage");
     }
 
     private void OnHit(Enemy enemy)
@@ -172,6 +181,22 @@ public class PlayerShooter : MonoBehaviour
     {
         bullet.Hit -= OnHit;
         bullet.Died -= BulletComplete;
+    }
+
+    private void SetCurrentWeapon()
+    {
+        if (YandexGame.savesData.weaponIndex != -1)
+        {
+            _weaponIndex = YandexGame.savesData.weaponIndex;
+            Debug.LogWarning("weapon index - " + _weaponIndex);
+        }
+
+        ChangeWeapon(_weaponIndex);
+    }
+
+    public void TestShowDamage()
+    {
+        Debug.LogWarning(_damage + " - damage");
     }
 }
 

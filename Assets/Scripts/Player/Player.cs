@@ -13,20 +13,11 @@ public class Player : GameUnit
     public event Action MaxHealthLevelIncreased;
 
     private void Start()
-    {
-        //if(YandexGame.savesData.playerHealth > 1f)
-        //{
-        //    _maxHealth = YandexGame.savesData.playerHealth;
-        //}
-        
-        if(YandexGame.savesData.upgradeHealthLevel == -1)
-        {
-            //_maxHealth += _changeHealthValue * YandexGame.savesData.upgradeHealthLevel;
-            //Debug.Log("Save Upgrade Health == -1");
-        }
-        else
+    {    
+        if(YandexGame.savesData.upgradeHealthLevel != -1)
         {
             _maxHealth += _changeHealthValue * YandexGame.savesData.upgradeHealthLevel;
+            Debug.LogWarning("UpgradeHealthLevel - " + _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + ", yandexUpgradeLevel - " + YandexGame.savesData.upgradeHealthLevel);
         }
     }
 
@@ -59,5 +50,7 @@ public class Player : GameUnit
             //Debug.Log("maxHealth - " + _maxHealth + ", healthIncreaseLevelValue - " + _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + ", maxIncreaseHealthLevel - " + _maxIncreaseHealthLevel);
             MaxHealthLevelIncreased?.Invoke();  // Дописать логику в UI. Получая это событие вызывать блокировку кнопки и замена Image
         }
+
+        Debug.LogWarning("UpgradeHealthLevel - " + _playerUpgradeSystem.UpgradeData.UpgradeHealthLevel.Value + ", yandexUpgradeLevel - " + YandexGame.savesData.upgradeHealthLevel);
     }
 }

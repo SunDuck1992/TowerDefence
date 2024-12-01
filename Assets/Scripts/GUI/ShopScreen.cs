@@ -40,6 +40,11 @@ public class ShopScreen : MonoBehaviour
             }
         }
 
+        if (YandexGame.savesData.weaponIndex != -1)
+        {
+            ChangeButtonSprite(YandexGame.savesData.weaponIndex);
+        }
+
         //LoadSettings();
     }
 
@@ -51,6 +56,7 @@ public class ShopScreen : MonoBehaviour
         {
             _playerShooter.ChangeWeapon(index);
             ChangeButtonSprite(index);
+            YandexGame.savesData.weaponIndex = index;
         }
         else
         {
@@ -60,6 +66,7 @@ public class ShopScreen : MonoBehaviour
                 ChangeButtonSprite(index);
                 item.isBuyed = true;
                 YandexGame.savesData.weaponsIsBuyed[index] = item.isBuyed;
+                YandexGame.savesData.weaponIndex = index;
             }
             else
             {

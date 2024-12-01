@@ -73,8 +73,6 @@ public class PlayerWallet
 
     private void SetValue()
     {
-        _gold = YandexGame.savesData.gold;
-
         if (YandexGame.savesData.gold == -1)
         {
             _gold = 800;

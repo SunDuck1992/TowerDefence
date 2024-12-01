@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using YG;
 
 public class BuildArea : MonoBehaviour
 {
@@ -43,7 +44,14 @@ public class BuildArea : MonoBehaviour
         _canvasTransform = _canvas.transform;
         _originalScale = _canvasTransform.localScale;
         _pingPongDesiredScale = _originalScale + _pingPongScaleAddition;
+    }
 
+    private void Start()
+    {
+        if(YandexGame.savesData.UpgradeLevelTower != -1)
+        {
+            _improveLevel = YandexGame.savesData.UpgradeLevelTower;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -87,7 +95,16 @@ public class BuildArea : MonoBehaviour
 
     public void IncreaseImproveLevel()
     {
-        _improveLevel++;
+        if(YandexGame.savesData.UpgradeLevelTower == -1)
+        {
+            _improveLevel++;
+            YandexGame.savesData.UpgradeLevelTower = _improveLevel;
+        }
+        else
+        {
+            _improveLevel++;
+            YandexGame.savesData.UpgradeLevelTower++;
+        }
     }
 
     private void StartFilling()
