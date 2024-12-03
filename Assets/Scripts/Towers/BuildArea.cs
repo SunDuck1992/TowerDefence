@@ -33,6 +33,7 @@ public class BuildArea : MonoBehaviour
     public Transform BuildPoint => _buildPoint;
     public Tower CurrentTower => _currentTower;
     public bool OnBuild { get; set; }
+    //public int TowerType {  get; set; }
     public BuildTowersSystem BuildTowersSystem { get; set; }
     public int WaveLevel => _waveLevel;
     public int ImproveLevel => _improveLevel;

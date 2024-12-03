@@ -1,5 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Windows;
 
 namespace YG
 {
@@ -20,9 +23,6 @@ namespace YG
 
         // Ваши сохранения
 
-        public float playerHealth; 
-        public float weaponDamage;
-        public float weaponSpeed;
         public int gold = -1;  // +
         public int gem = -1;  // +
 
@@ -33,10 +33,16 @@ namespace YG
         public int upgradeSpeedWeaponLevel = -1; // +
         public int upgradeHealthLevel = -1; // +
 
-        public int weaponIndex = -1;
+        public int weaponIndex = -1; // +
         public int UpgradeLevelTower = -1;
 
         public List<bool> weaponsIsBuyed = new List<bool>(new bool[3]);
+
+        public List<BuildArea> buildAreas = new List<BuildArea>();
+        public List<BuildedAreaInfo> buildedAreas = new List<BuildedAreaInfo>();
+        //public List<int> towersType = new List<int>();
+        //public List<BuildedAreaInfo> buildedAreaInfos = new List<BuildedAreaInfo>();
+        //public Dictionary<BuildArea, int> buildedAreas = new Dictionary<BuildArea, int>();
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
@@ -48,7 +54,25 @@ namespace YG
 
             openLevels[1] = true;
             weaponsIsBuyed[0] = true;
-            //weaponsIsBuyed[0] = true;
+        }
+    }
+
+    [Serializable]
+    public class BuildedAreaInfo
+    {
+        public string name; // Изменено на поле
+        public int value;   // Изменено на поле
+        public bool isBuilded;
+
+        // Пустой конструктор для сериализации
+        public BuildedAreaInfo() { }
+
+        // Конструктор с параметрами
+        public BuildedAreaInfo(string name, int prefabValue, bool flag)
+        {
+            this.name = name;
+            value = prefabValue;
+            isBuilded = flag;
         }
     }
 }

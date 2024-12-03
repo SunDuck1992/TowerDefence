@@ -76,6 +76,12 @@ public class BuildTowersSystem
 
     public void BuildTower(Tower prefab)
     {
+        if (_currentBuildArea == null)
+        {
+            Debug.LogWarning(" _currentBuildArea is null");
+            return;
+        }
+
         if (_currentBuildArea.OnBuild) return;
 
         NavMesh.SamplePosition(_currentBuildArea.BuildPoint.position, out var hit, 1, NavMesh.AllAreas);
@@ -102,6 +108,11 @@ public class BuildTowersSystem
     public Tower GetBuildTower()
     {
         return _towerBuild;
+    }
+
+    public void SetCurrentbuildArea(BuildArea buildArea)
+    {
+        _currentBuildArea = buildArea;
     }
 
     private void RepairTowers(int cost)

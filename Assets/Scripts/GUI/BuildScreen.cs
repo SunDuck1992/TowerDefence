@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using YG;
+using System.Reflection;
 
 public class BuildScreen : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class BuildScreen : MonoBehaviour
     [SerializeField] private int _improveCost;
 
     private BuildTowersSystem _buildTowerSystem;
+    private SceneSettings _sceneSettings;
     private PlayerWallet _playerWallet;
     private Tower _tower;
     private Sprite _currentSprite;
@@ -26,12 +29,65 @@ public class BuildScreen : MonoBehaviour
     private bool[] _isCoroutineRunning = new bool[4];
 
     [Inject]
-    public void Construct(BuildTowersSystem buildTowersSystem, PlayerWallet playerWallet)
+    public void Construct(BuildTowersSystem buildTowersSystem, PlayerWallet playerWallet, SceneSettings sceneSettings)
     {
         _playerWallet = playerWallet;
         _buildTowerSystem = buildTowersSystem;
+        _sceneSettings = sceneSettings;
         _buildTowerSystem.InteractBuildArea += ShowBuildScreen;
         _buildTowerSystem.DeInteractBuildArea += HideBuildScreen;
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < _sceneSettings.BuildPoints.Count; i++)
+        {
+            for (int j = 0; j < YandexGame.savesData.buildedAreas.Count; j++)
+            {
+                if (_sceneSettings.BuildPoints[i].name == YandexGame.savesData.buildedAreas[j].name && YandexGame.savesData.buildedAreas[j].isBuilded)
+                {
+                    Debug.LogWarning("Найдены совпадения");
+
+                    _buildTowerSystem.SetCurrentbuildArea(_sceneSettings.BuildPoints[i]);
+
+                    if (_buildTowerSystem == null)
+                    {
+                        Debug.LogError("_buildTowerSystem is null");
+                        return;
+                    }
+                    if (_buildTowerSystem.TowerSettings == null)
+                    {
+                        Debug.LogError("_buildTowerSystem.TowerSettings is null");
+                        return;
+                    }
+                    if (_buildTowerSystem.TowerSettings.Datas == null)
+                    {
+                        Debug.LogError("_buildTowerSystem.TowerSettings.Datas is null");
+                        return;
+                    }
+
+                    var prefab = _buildTowerSystem.TowerSettings.Datas[YandexGame.savesData.buildedAreas[j].value].Prefab;
+                    if (prefab == null)
+                    {
+                        Debug.LogError("Prefab is null");
+                        return;
+                    }
+
+                    if (!_sceneSettings.BuildPoints[i].OnBuild)
+                    {
+                        Debug.LogWarning("Вошли внутрь");
+                        _buildTowerSystem.BuildTower(_buildTowerSystem.TowerSettings.Datas[YandexGame.savesData.buildedAreas[j].value].Prefab);
+                        _tower = _buildTowerSystem.GetBuildTower();
+                        _buildTowerSystem.CurrentBuildArea.SetCurrentTower(_tower);
+                        _currentSprite = _buildTowerSystem.TowerSettings.Datas[YandexGame.savesData.buildedAreas[j].value].Sprite;
+                    }
+
+                   
+                }
+
+            }
+                Debug.LogWarning("Совпадений не найдено");
+        }
     }
 
     public void OnClickButtonBuild(int index)
@@ -46,6 +102,14 @@ public class BuildScreen : MonoBehaviour
                 _tower = _buildTowerSystem.GetBuildTower();
                 _buildTowerSystem.CurrentBuildArea.SetCurrentTower(_tower);
                 _currentSprite = _buildTowerSystem.TowerSettings.Datas[index].Sprite;
+                YandexGame.savesData.buildAreas.Add(_buildTowerSystem.CurrentBuildArea);
+                YandexGame.savesData.buildedAreas.Add(new BuildedAreaInfo(_buildTowerSystem.CurrentBuildArea.name, index, true));
+                //YandexGame.savesData.towersType.Add(index);
+                //YandexGame.savesData.buildedAreas.Add(_buildTowerSystem.CurrentBuildArea, index);
+                //_buildTowerSystem.CurrentBuildArea.TowerType = index;
+                //YandexGame.savesData.buildedAreaInfos.Add(new BuildedAreaInfo(_buildTowerSystem.CurrentBuildArea, index));
+                //YandexGame.savesData.BuildedAreas.Add(new BuildedAreaInfo(_buildTowerSystem.CurrentBuildArea, index));
+                //YandexGame.savesData.Test.Add(_buildTowerSystem.CurrentBuildArea, index);
             }
             else
             {
@@ -137,6 +201,23 @@ public class BuildScreen : MonoBehaviour
     {
         _panel.SetActive(false);
         _secondPanel.SetActive(false);
+    }
+
+    public void Test()
+    {
+        //if (YandexGame.savesData.buildedAreaInfos.Count != 0)
+        //{
+        //    for (int i = 0; i <= YandexGame.savesData.buildedAreaInfos.Count; i++)
+        //    {
+        //        Debug.LogWarning(YandexGame.savesData.buildedAreaInfos[i].Area + " - Area, + " + YandexGame.savesData.buildedAreaInfos[i].Value + "  - Value");
+        //    }
+        //}
+
+
+
+        //Debug.LogWarning(YandexGame.savesData.buildedAreaInfos[0].Area + " - Area, + " + YandexGame.savesData.buildedAreaInfos[0].Value + "  - Value");
+
+
     }
 
     //private void ChangeButtonSprite(int index)
