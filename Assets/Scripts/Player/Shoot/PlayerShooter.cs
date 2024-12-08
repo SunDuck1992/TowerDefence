@@ -6,7 +6,7 @@ using Zenject;
 
 public class PlayerShooter : MonoBehaviour
 {
-    public const float Radius = 5f;
+    public const float Radius = 7f;
 
     [SerializeField] private Animator _weaponAnimator;
     [SerializeField] private List<Weapon> _weapons;

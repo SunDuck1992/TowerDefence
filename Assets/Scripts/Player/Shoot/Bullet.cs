@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private ParticleSystem _hitBulletParticle;
 
-    public float Damage {  get; set; }
+    public float Damage { get; set; }
 
     public event Action<Bullet> Died;
     public event Action<Enemy> Hit;

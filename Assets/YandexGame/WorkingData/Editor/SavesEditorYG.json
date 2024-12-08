@@ -1,0 +1,29 @@
+{
+    "idSave": 9,
+    "isFirstSession": false,
+    "language": "ru",
+    "promptDone": false,
+    "money": 1,
+    "newPlayerName": "Hello!",
+    "openLevels": [
+        false,
+        true,
+        false
+    ],
+    "gold": 600,
+    "gem": 0,
+    "waveCount": 3,
+    "enemyCount": 6,
+    "upgradeDamageLevel": -1,
+    "upgradeSpeedWeaponLevel": 3,
+    "upgradeHealthLevel": -1,
+    "weaponIndex": 2,
+    "UpgradeLevelTower": -1,
+    "weaponsIsBuyed": [
+        true,
+        false,
+        true
+    ],
+    "buildAreas": [],
+    "buildedAreas": []
+}
