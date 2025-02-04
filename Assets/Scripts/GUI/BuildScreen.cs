@@ -188,6 +188,15 @@ public class BuildScreen : MonoBehaviour
             for (int i = 0; i < _towerImages.Count; i++)
             {
                 _towerImages[i].sprite = _buildTowerSystem.TowerSettings.Datas[i].Sprite;
+
+                if(_buildTowerSystem.TowerSettings.Datas[i].Sprite == null)
+                {
+                    Debug.LogWarning("SPRITE NULL");
+                }
+                else
+                {
+                    Debug.LogWarning("SPRITE NA MESTE");
+                }
             }
         }
     }

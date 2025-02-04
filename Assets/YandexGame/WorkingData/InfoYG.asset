@@ -43,7 +43,7 @@ MonoBehaviour:
   leaderboardEnable: 1
   saveScoreAnonymousPlayers: 1
   leaderboardSimulation:
-  - technoName: advanced
+  - technoName: TowerLeaderBoard
     entries: 'Test LeaderBoard
 
       Name: advanced
@@ -89,9 +89,34 @@ MonoBehaviour:
       score: 50
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 321
+    - rank: 7
+      name: Zayac007
+      score: 80
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 007
+    - rank: 7
+      name: Zayac007
+      score: 80
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 007
+    - rank: 7
+      name: Zayac007
+      score: 80
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 007
+    - rank: 7
+      name: Zayac007
+      score: 80
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 007
+    - rank: 7
+      name: Bobr
+      score: 20
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 007
     thisPlayer:
-      rank: 2
-      score: 10
+      rank: 15
+      score: 70
   - technoName: simple
     entries: "Test LeaderBoard\nName: simple\n1. \u0441\u043A\u0440\u044B\u0442:
       10\n2. Max: 15\n3. Maria: 23"
@@ -218,6 +243,35 @@ MonoBehaviour:
     de: 0
     hi: 0
   fonts:
+    defaultFont: []
+    ru: []
+    en: []
+    tr: []
+    az: []
+    be: []
+    he: []
+    hy: []
+    ka: []
+    et: []
+    fr: []
+    kk: []
+    ky: []
+    lt: []
+    lv: []
+    ro: []
+    tg: []
+    tk: []
+    uk: []
+    uz: []
+    es: []
+    pt: []
+    ar: []
+    id: []
+    ja: []
+    it: []
+    de: []
+    hi: []
+  fontsTMP:
     defaultFont: []
     ru: []
     en: []

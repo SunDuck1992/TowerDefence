@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using YG;
+using YG.Utils.LB;
+
 
 public class WaveScreen : MonoBehaviour
 {
@@ -38,6 +40,8 @@ public class WaveScreen : MonoBehaviour
         _enemyManager.EnemyDied += UpdateProgressBar;
         OnEndBattle += ShowBuildAreas;
         OnEndBattle += _enemyImprover.Improve;
+        OnEndBattle += GetLeaderboardScore;
+        YandexGame.onGetLeaderboard += SetLeaderData;
     }
 
     private void OnDestroy()
@@ -45,6 +49,7 @@ public class WaveScreen : MonoBehaviour
         _enemyManager.EnemyDied -= UpdateProgressBar;
         OnEndBattle -= ShowBuildAreas;
         OnEndBattle -= _enemyImprover.Improve;
+        OnEndBattle += GetLeaderboardScore;
     }
 
     public void StartBattle()
@@ -94,6 +99,23 @@ public class WaveScreen : MonoBehaviour
                     _sceneSettings.BuildPoints[i].gameObject.SetActive(true);
                 }
             }
-        }       
+        }
+    }
+
+    private void GetLeaderboardScore()
+    {
+        YandexGame.GetLeaderboard("TowerLeaderBoard", 10, 5, 5, "small");
+    }
+
+    private void SetLeaderData(LBData data)
+    {
+        if (data.thisPlayer != null && data.thisPlayer.score >= _spawner.WaveCount)
+        {
+            return;
+        }
+        else
+        {
+            YandexGame.NewLeaderboardScores("TowerLeaderBoard", _spawner.WaveCount);
+        }
     }
 }

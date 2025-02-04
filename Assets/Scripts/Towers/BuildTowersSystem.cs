@@ -66,6 +66,7 @@ public class BuildTowersSystem
     {
         _currentBuildArea = buildArea;
         InteractBuildArea?.Invoke(buildArea);
+        Debug.LogWarning(_currentBuildArea);
     }
 
     public void OnDeInteractBuildArea()
