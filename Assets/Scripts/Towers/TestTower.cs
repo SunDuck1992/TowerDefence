@@ -32,8 +32,6 @@ public class TestTower : MonoBehaviour
         _rocket.Damage = damage;
         _rocket.transform.position = _shotPointPosition.position;
         _rocket.transform.forward = _shotPointPosition.forward;
-
-        Debug.Log("Спавн");
     }
 
     private IEnumerator SpawnRocketWithDelay()
@@ -42,7 +40,6 @@ public class TestTower : MonoBehaviour
         {
             if (IsSpawnAreaClear())
             {
-                Debug.Log("Прошла проверка, можно спавнить");
                 SpawnRocket();
             }
             else
@@ -51,17 +48,11 @@ public class TestTower : MonoBehaviour
 
                 if (IsSpawnAreaClear())
                 {
-                    Debug.Log("Прошла проверка, можно спавнить");
                     SpawnRocket();
-                }
-                else
-                {
-                    Debug.LogWarning("Не удалось спавнить ракету из-за препятствий в зоне спавна");
                 }
             }
 
             yield return new WaitForSeconds(1f);
-
         }
     }
 }

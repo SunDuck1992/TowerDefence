@@ -18,6 +18,8 @@ public class PlayerUpgradeSystem
     public PlayerUpgradeSystem()
     {
         YandexGame.GetDataEvent += SetUpgradeLevels;
+
+        SetUpgradeLevels();
     }
 
     ~PlayerUpgradeSystem()
@@ -109,6 +111,4 @@ public class PlayerUpgradeSystem
             Debug.LogWarning("UpgradeDamageLevel - " + UpgradeData.UpgradeHealthLevel.Value + ", yandexUpgrade - " + YandexGame.savesData.upgradeHealthLevel);
         }
     }
-
-
 }

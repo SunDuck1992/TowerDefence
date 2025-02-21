@@ -13,6 +13,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private ParticleSystem _hitParticle;
 
     private ParticleSystem _particle;
+    private bool _isParticle;
 
     public float Speed => _speed;
     public float Damage { get; set; }
@@ -31,12 +32,11 @@ public class Rocket : MonoBehaviour
     {
         StopAllCoroutines();
         ClearEvents();
+        _isParticle = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning($"Triggering {other.gameObject.name}");
-
         if (other.TryGetComponent<Enemy>(out var enemy))
         {
             HitTower?.Invoke(enemy);
@@ -65,18 +65,20 @@ public class Rocket : MonoBehaviour
 
         while (elapsedTime < _duration)
         {
-            Debug.Log("Лечу вверх");
             transform.Translate(Vector3.forward * _speed * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        _particle = Instantiate(_flyParticle, _fire.position, Quaternion.LookRotation(-_fire.forward));
-        _particle.transform.parent = _fire;
+        if (!_isParticle)
+        {
+            _particle = Instantiate(_flyParticle, _fire.position, Quaternion.LookRotation(-_fire.forward));
+            _particle.transform.parent = _fire;
+            _isParticle = true;
+        }
 
         while (Target != null)
         {
-            Debug.Log("Лечу к цели");
             Vector3 direction = (Target.transform.position - transform.position).normalized;
             transform.position += direction * _speed * Time.deltaTime;
 

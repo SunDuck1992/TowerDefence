@@ -9,6 +9,12 @@ public class UpgradeButton : MonoBehaviour
 {
     [SerializeField] private Button _button;
     [SerializeField] private Upgrade _upgrade;
+    [SerializeField] private int _maxLevelUpgrade;
+
+    private int _countClicked;
+
+    public int MaxLevelUpgrade => _maxLevelUpgrade;
+    public int CountClicked => _countClicked;
 
     public event Action<Upgrade> Clicked;
 
@@ -17,17 +23,12 @@ public class UpgradeButton : MonoBehaviour
         _button.onClick.AddListener(() =>
         {
             Clicked?.Invoke(_upgrade);
-            Proverka();
+            _countClicked++;
         });
     }
 
     private void OnDisable()
     {
         _button.onClick.RemoveAllListeners();
-    }
-
-    private void Proverka()
-    {
-        Debug.Log(" нопка " + _upgrade + " была нажата");
     }
 }

@@ -18,7 +18,7 @@ public class ArrayBulletShoot : Weapon
 
         if(_count > 0)
         {
-            WeaponPoint.localRotation = Quaternion.Euler(Vector3.up * (_count == 1 ? -7 : 7));
+            WeaponPoint.localRotation = Quaternion.Euler(Vector3.up * (_count == 1 ? -5 : 5));
         }
 
             base.CreateBullet(bullet);

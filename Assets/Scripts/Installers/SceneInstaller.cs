@@ -9,9 +9,7 @@ public class SceneInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<SceneSettings>().FromInstance(_sceneSettings).AsSingle();
-        //_uiSettings.IsMobile = true;SDK
         Container.Bind<UISettings>().FromInstance(_uiSettings).AsSingle();
         Container.Bind<TargetController>().AsSingle();
-        //Container.Bind<MashineGunTower>().AsSingle();
     }
 }

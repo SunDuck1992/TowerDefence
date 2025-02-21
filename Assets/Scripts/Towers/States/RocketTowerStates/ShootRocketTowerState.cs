@@ -14,9 +14,7 @@ public class ShootRocketTowerState : BaseState<RocketTower>
 
     public override void Enter()
     {
-        Debug.LogWarning("Вошли в состояние стрельбы");
         PushRocket();
-        Debug.LogWarning("Запустили корутину на спавн ракеты");
     }
 
     private bool IsSpawnAreaClear()
@@ -64,40 +62,7 @@ public class ShootRocketTowerState : BaseState<RocketTower>
         _rocket.transform.position = Owner.ShotPoint.position;
         _rocket.transform.forward = Owner.ShotPoint.forward;
 
-        Debug.LogWarning("Заспавнили ракету - " + _rocket.name);
-
         _rocket.HitTower += OnHit;
         _rocket.Died += RocketComplete;
     }
-
-    //private IEnumerator SpawnRocketWithDelay()
-    //{
-
-    //    if (IsSpawnAreaClear())
-    //    {
-    //        Debug.LogWarning("Прошли проверку на спавн");
-    //        PrepareRocket();
-    //    }
-    //    else
-    //    {
-    //        yield return new WaitForSeconds(0.2f);
-
-    //        if (IsSpawnAreaClear())
-    //        {
-    //            Debug.LogWarning("Прошли проверку на спавн со 2 раза");
-    //            PrepareRocket();
-    //        }
-    //        else
-    //        {
-    //            Debug.LogWarning("Не удалось спавнить ракету из-за препятствий в зоне спавна");
-    //        }
-    //    }
-
-
-    //    yield return new WaitForSeconds(1f);
-
-    //    //CoroutineManager.StopStaticCoroutine(_coroutine);
-    //    Debug.LogWarning("Перехожу в состояние презарядки");
-    //    Owner.StateMachine.SwitchState<ReloadRocketTowerState, RocketTower>(Owner);
-    //}
 }

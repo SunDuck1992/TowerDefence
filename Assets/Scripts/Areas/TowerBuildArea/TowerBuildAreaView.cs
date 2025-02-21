@@ -12,7 +12,6 @@ public class TowerBuildAreaView : MonoBehaviour
     private Vector3 _scaleChange;
     private Transform _transform;
 
-    //[SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] TowerSelectionView _towerSelectionView;
     [SerializeField] Image _fillImage;
     [SerializeField] private float _pingPongHalfScaleDuration = 0.5f;
@@ -70,7 +69,6 @@ public class TowerBuildAreaView : MonoBehaviour
 
     private void OnGoldDelivered()
     {
-        //_particleSystem.Play();
         Time.timeScale = 0f;
         _towerSelectionView.gameObject.SetActive(true);
     }

@@ -17,12 +17,6 @@ public class EnemyMovementState : BaseState<Enemy>
 
             if (distanceToTarget <= _radius)
             {
-                //Owner.Agent.SetDestination(Owner.transform.position);
-                //Owner.StateMachine.SwitchState<EnemyIdleState, Enemy>(Owner);
-
-                //}
-                //else
-                //{
                 if (_timer <= Time.time)
                 {
                     _randomPoint = Owner.transform.position + Random.insideUnitSphere * 2.5f;

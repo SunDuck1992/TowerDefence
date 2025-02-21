@@ -28,14 +28,15 @@ public class Rotate : MonoBehaviour
     private void Update()
     {
         Quaternion rotation = Quaternion.LookRotation(Direction);
+        float rotationStep = _rotationSpeed * Time.deltaTime;
 
         if(_isShooting)
         {
-            _playerView.transform.rotation = Quaternion.RotateTowards(_playerView.transform.rotation, rotation, _rotationSpeed);
+            _playerView.transform.rotation = Quaternion.RotateTowards(_playerView.transform.rotation, rotation, rotationStep);
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, _rotationSpeed);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationStep);
         }
     }
 }

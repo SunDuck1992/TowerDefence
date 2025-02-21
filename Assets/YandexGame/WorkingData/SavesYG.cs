@@ -6,7 +6,7 @@ using UnityEngine.Windows;
 
 namespace YG
 {
-    [System.Serializable]
+    [Serializable]
     public class SavesYG
     {
         // "Технические сохранения" для работы плагина (Не удалять)
@@ -23,6 +23,8 @@ namespace YG
 
         // Ваши сохранения
 
+        public int leaderScore = 0;
+
         public int gold = -1;  // +
         public int gem = -1;  // +
 
@@ -32,6 +34,10 @@ namespace YG
         public int upgradeDamageLevel = -1; // +
         public int upgradeSpeedWeaponLevel = -1; // +
         public int upgradeHealthLevel = -1; // +
+
+        //public int MaxDamageLevel = 10;
+        //public int MaxFirerateLevel = 5;
+        //public int MaxHealthLevel = 20;
 
         public int weaponIndex = -1; // +
         public int UpgradeLevelTower = -1;
@@ -63,6 +69,8 @@ namespace YG
         public string name; // Изменено на поле
         public int value;   // Изменено на поле
         public bool isBuilded;
+
+        public int improveLevel = 1;
 
         // Пустой конструктор для сериализации
         public BuildedAreaInfo() { }

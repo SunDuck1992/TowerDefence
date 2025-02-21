@@ -8,6 +8,9 @@ using Zenject;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private const string VerticalDirection = "Vertical";
+    private const string HorizontalDirection = "Horizontal";
+
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private PlayerAnimationController _controller;
@@ -16,21 +19,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rotate _rotate;
     [SerializeField] private Animator _weaponAnimator;
 
-    private const string VerticalDirection = "Vertical";
-    private const string HorizontalDirection = "Horizontal";
-
-    private Rigidbody _rigidbody;
     private Vector3 _movement;
 
     [Inject]
     public void Construct(UISettings uISettings)
     {
         _joystick = uISettings.Joystick;
-    }
-
-    private void Start()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()

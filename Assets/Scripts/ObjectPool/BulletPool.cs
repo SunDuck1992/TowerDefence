@@ -21,19 +21,4 @@ public class BulletPool : BasePool<Bullet>
         despawnObject.gameObject.SetActive(false);
         despawnObject.Died -= Despawn;
     }
-
-
-    //private static BulletPool _instance;
-
-    //public static BulletPool Instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            _instance = new BulletPool();
-    //        }
-    //        return _instance;
-    //    }
-    //}
 }

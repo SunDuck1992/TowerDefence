@@ -45,7 +45,6 @@ public class EnemyManager
         enemy.DiedComplete.AddListener(Destroy);
         enemy.DiedStart.AddListener(CleanTarget);
 
-        //Debug.Log("ID" + enemy.GetHashCode());
         Debug.Log(_enemyImprover.Health + " - improve health, " + _enemyImprover.Damage + " - improve damage");
     }
 

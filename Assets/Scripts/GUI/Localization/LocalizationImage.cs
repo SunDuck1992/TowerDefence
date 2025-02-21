@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class LocalizationImage : MonoBehaviour
 {
@@ -22,19 +23,19 @@ public class LocalizationImage : MonoBehaviour
         switch (languageCode)
         {
             case EnglishCode:
-                _englishText.gameObject.SetActive(true);
+                _englishImage.gameObject.SetActive(true);
                 break;
 
             case RussianCode:
-                _russiaText.gameObject.SetActive(true);
+                _russiaImage.gameObject.SetActive(true);
                 break;
 
             case TurkishCode:
-                _turkishText.gameObject.SetActive(true);
+                _turkishImage.gameObject.SetActive(true);
                 break;
 
             default:
-                _englishText.gameObject.SetActive(true);
+                _englishImage.gameObject.SetActive(true);
                 break;
         }
 #endif

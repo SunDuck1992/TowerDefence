@@ -26,15 +26,12 @@ public abstract class GameUnit : MonoBehaviour
     protected virtual void Awake()
     {
         AttackSector = GetComponent<AttackSector>();
-    }
-
-    //public virtual void EnableHealParticle() { }
-    
+    }    
 
     private void OnEnable()
     {
         _health = _maxHealth;
-        _isDead = false;
+        _isDead = false;        
     }
 
     public void TakeDamage(float damage)

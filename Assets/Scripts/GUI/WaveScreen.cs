@@ -15,7 +15,7 @@ public class WaveScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _countWavetext;
     [SerializeField] private TextMeshProUGUI _countEnemiesProgressText;
     [SerializeField] private Slider _progressWaveBar;
-    //[SerializeField] private List<BuildArea> _buildAreas;
+    [SerializeField] private GameObject _backGroundMusic;
 
     private EnemyManager _enemyManager;
     private Spawner _spawner;
@@ -37,11 +37,14 @@ public class WaveScreen : MonoBehaviour
 
     private void Start()
     {
+        ShowBuildAreas();
+
         _enemyManager.EnemyDied += UpdateProgressBar;
         OnEndBattle += ShowBuildAreas;
         OnEndBattle += _enemyImprover.Improve;
-        OnEndBattle += GetLeaderboardScore;
-        YandexGame.onGetLeaderboard += SetLeaderData;
+        OnEndBattle += DisableMusic;
+        OnEndBattle += SaveLeaderData;
+        OnEndBattle += SaveWaweInfo;
     }
 
     private void OnDestroy()
@@ -49,23 +52,15 @@ public class WaveScreen : MonoBehaviour
         _enemyManager.EnemyDied -= UpdateProgressBar;
         OnEndBattle -= ShowBuildAreas;
         OnEndBattle -= _enemyImprover.Improve;
-        OnEndBattle += GetLeaderboardScore;
+        OnEndBattle -= DisableMusic;
+        OnEndBattle -= SaveLeaderData;
+        OnEndBattle -= SaveWaweInfo;
     }
 
     public void StartBattle()
     {
         _spawner.SpawnOnClick();
         _countEnemiesProgressText.text = $"{0} / {_spawner.MaxCountEnemies}";
-
-        //if(YandexGame.savesData.waveCount == -1)
-        //{
-        //    _countWavetext.text = _spawner.WaveCount.ToString();
-        //}
-        //else
-        //{
-        //    _countWavetext.text = YandexGame.savesData.waveCount.ToString();
-        //}
-
         _countWavetext.text = _spawner.WaveCount.ToString();
         _progressWaveBar.maxValue = _spawner.MaxCountEnemies;
         _progressWaveBar.value = 0;
@@ -102,20 +97,19 @@ public class WaveScreen : MonoBehaviour
         }
     }
 
-    private void GetLeaderboardScore()
+    private void SaveLeaderData()
     {
-        YandexGame.GetLeaderboard("TowerLeaderBoard", 10, 5, 5, "small");
+        YandexGame.savesData.leaderScore += 13;
     }
 
-    private void SetLeaderData(LBData data)
+    private void SaveWaweInfo()
     {
-        if (data.thisPlayer != null && data.thisPlayer.score >= _spawner.WaveCount)
-        {
-            return;
-        }
-        else
-        {
-            YandexGame.NewLeaderboardScores("TowerLeaderBoard", _spawner.WaveCount);
-        }
+        YandexGame.savesData.waveCount = _spawner.WaveCount;
+        YandexGame.savesData.enemyCount = _spawner.CountEnemies;
+    }
+
+    private void DisableMusic()
+    {
+        _backGroundMusic.SetActive(false);
     }
 }

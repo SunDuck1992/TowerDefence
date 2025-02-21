@@ -17,8 +17,6 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private ParticleSystem _hitBulletParticle;
     [SerializeField] private ParticleSystem _massiveHitBulletParticle;
 
-    public Weapon CurrentWeapon { get; private set; }
-
     private UISettings _uISettings;
     private float _damage;
     private BulletPool _bulletPool;
@@ -30,6 +28,7 @@ public class PlayerShooter : MonoBehaviour
     private PlayerWallet _playerWallet;
     private float _couldown;
 
+    public Weapon CurrentWeapon { get; private set; }
     public bool IsShooting { get; private set; }
 
     [Inject]
@@ -42,29 +41,22 @@ public class PlayerShooter : MonoBehaviour
         _playerUpgradeSystem = playerUpgradeSystem;
         _damage = gameConfigProxy.Config.PlayerConfig.Damage;
 
-        //if(YandexGame.savesData.weaponIndex != -1)
-        //{
-        //    _weaponIndex = YandexGame.savesData.weaponIndex;
-        //    Debug.LogWarning("weapon index - " +  _weaponIndex);
-        //}
-
         YandexGame.GetDataEvent += SetCurrentWeapon;
+        SetCurrentWeapon();
 
         _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged += UpdateDamage;
         _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.ValueChanged += UpdateShootSpeed;
         _uISettings.MassDamageButton.EnableBonus.AddListener(ActivateMassDamage);
         _uISettings.MassDamageButton.DisableBonus.AddListener(DeactivateMassDamage);
-        ChangeWeapon(_weaponIndex);
 
+        ChangeWeapon(_weaponIndex);
         _couldown = CurrentWeapon.FireRate;
     }
 
     ~PlayerShooter()
     {
         _uISettings.MassDamageButton.EnableBonus.RemoveAllListeners();
-        _uISettings.MassDamageButton.DisableBonus.RemoveAllListeners();
-
-        YandexGame.GetDataEvent -= SetCurrentWeapon;
+        _uISettings.MassDamageButton.DisableBonus.RemoveAllListeners();       
     }
 
     public void ChangeWeapon(int indexWeapon)
@@ -85,6 +77,7 @@ public class PlayerShooter : MonoBehaviour
     {
         _playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.ValueChanged -= UpdateDamage;
         _playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.ValueChanged -= UpdateShootSpeed;
+        YandexGame.GetDataEvent -= SetCurrentWeapon;
     }
 
     private void Start()
@@ -148,13 +141,11 @@ public class PlayerShooter : MonoBehaviour
     public void UpdateShootSpeed()
     {
         _couldown = CurrentWeapon.ChangeFirerate(_playerUpgradeSystem.UpgradeData.UpgradeShootSpeedLevel.Value);
-        Debug.Log(_couldown + " - firerate");
     }
 
     private void UpdateDamage()
     {
         _damage = CurrentWeapon.ChangeDamage(_playerUpgradeSystem.UpgradeData.UpgradeDamageLevel.Value);
-        Debug.Log(_damage + " - damage");
     }
 
     private void OnHit(Enemy enemy)
@@ -173,7 +164,6 @@ public class PlayerShooter : MonoBehaviour
             }
         }
 
-        //Instantiate(_hitBulletParticle, enemy.DeathParticlePoint.position, Quaternion.identity);
         enemy.TakeDamage(_damage);
     }
 
@@ -188,15 +178,13 @@ public class PlayerShooter : MonoBehaviour
         if (YandexGame.savesData.weaponIndex != -1)
         {
             _weaponIndex = YandexGame.savesData.weaponIndex;
-            Debug.LogWarning("weapon index - " + _weaponIndex);
+        }
+        else
+        {
+            _weaponIndex = 0;
         }
 
         ChangeWeapon(_weaponIndex);
-    }
-
-    public void TestShowDamage()
-    {
-        Debug.LogWarning(_damage + " - damage");
     }
 }
 

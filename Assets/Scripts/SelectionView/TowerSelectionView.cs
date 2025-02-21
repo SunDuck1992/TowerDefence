@@ -3,7 +3,6 @@ using UnityEngine;
 public class TowerSelectionView : MonoBehaviour
 {
     private TowerBuildArea _towerBuildArea;
-    private GameObject _tower;
 
     private void Awake()
     {

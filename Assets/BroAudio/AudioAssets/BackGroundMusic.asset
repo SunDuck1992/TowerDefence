@@ -19,13 +19,13 @@ MonoBehaviour:
     <ID>k__BackingField: 268435458
     MulticlipsPlayMode: 0
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 77634543f182aba47b75b93682d3c7d7, type: 3}
-      Volume: 1
+    - AudioClip: {fileID: 8300000, guid: 084a3ab67911b564580a2cd90bc12b84, type: 3}
+      Volume: 0.30091482
       Delay: 0
-      StartPosition: 0.577
-      EndPosition: 3.552
-      FadeIn: 0
-      FadeOut: 0
+      StartPosition: 0
+      EndPosition: 0
+      FadeIn: 4
+      FadeOut: 2
       Weight: 0
     <MasterVolume>k__BackingField: 1
     <Loop>k__BackingField: 0

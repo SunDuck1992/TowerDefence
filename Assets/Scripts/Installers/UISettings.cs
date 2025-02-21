@@ -13,7 +13,6 @@ public class UISettings
     [SerializeField] private Joystick _joystickVertical;
 
     public bool IsMobile { get; set; }
-
     public ActivateBonusButton SlowEnemyButton => _slowEnemyButton;
     public ActivateBonusButton MassDamageButton => _massDamageButton;
     public ActivateBonusButton RepairTowersButton => _repairTowersButton;

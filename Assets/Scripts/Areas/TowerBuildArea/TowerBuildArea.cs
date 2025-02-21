@@ -15,8 +15,6 @@ public class TowerBuildArea : MonoBehaviour
 
     private int _currentGoldToDelive;
     private bool _isDelivering;
-    private float _deliveringDelay = 1f;
-    private float _deliveringInterval = 0.1f;
 
     private void Awake()
     {
@@ -35,7 +33,6 @@ public class TowerBuildArea : MonoBehaviour
         {
             _isDelivering = true;
             IsDelivering?.Invoke(_isDelivering);
-            //StartCoroutine(Delive(player));
         }
     }
 
@@ -47,31 +44,4 @@ public class TowerBuildArea : MonoBehaviour
             IsDelivering?.Invoke(_isDelivering);
         }
     }
-
-    //private IEnumerator Delive(Player player)
-    //{
-    //    var deliveringDelay = new WaitForSeconds(_deliveringDelay);
-
-    //    yield return deliveringDelay;
-
-    //    var deliveringInterval = new WaitForSeconds(_deliveringInterval);
-
-    //    while (_isDelivering)
-    //    {
-    //        if (_currentGoldToDelive - _minimumGoldToDelive >= 0 && player.TrySpendGold(_minimumGoldToDelive))
-    //        {
-    //            _currentGoldToDelive -= _minimumGoldToDelive;
-    //            _goldText.text = _currentGoldToDelive.ToString();
-
-    //            GoldDelivering?.Invoke(_currentGoldToDelive, _goldToDelive);
-    //        }
-
-    //        if (_currentGoldToDelive <= 0)
-    //        {
-    //            GoldDelivered?.Invoke();
-    //        }
-
-    //        yield return deliveringInterval;
-    //    }
-    //}
 }

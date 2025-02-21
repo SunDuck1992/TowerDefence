@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EnemyIdleState : BaseState<Enemy>
 {
-    
-
     public override void Enter()
     {
         Owner.Target = Owner.TargetController.GetTarget(Owner, 1000);

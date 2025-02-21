@@ -13,6 +13,8 @@ public class PlayerWallet
     public PlayerWallet()
     {
         YandexGame.GetDataEvent += SetValue;
+
+        SetValue();
     }
 
     ~PlayerWallet()
@@ -35,15 +37,15 @@ public class PlayerWallet
         }
     }
 
-    public void AddGem()
+    public void AddGem(int gem)
     {
-        _gem++;
+        _gem += gem;
         GemChanged?.Invoke();
     }
 
     public bool TrySpendGold(int gold)
     {
-        if (gold > 0 & _gold - gold >= 0)
+        if (gold >= 0 & _gold - gold >= 0)
         {
             _gold -= gold;
             GoldChanged?.Invoke(_gold);
@@ -75,7 +77,7 @@ public class PlayerWallet
     {
         if (YandexGame.savesData.gold == -1)
         {
-            _gold = 800;
+            _gold = 1500;
         }
         else
         {

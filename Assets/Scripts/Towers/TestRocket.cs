@@ -8,7 +8,6 @@ public class TestRocket : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _duration;
 
-    private float _elapsedTime = 0;
     public float Speed => _speed;
     public float Damage { get; set; }
     public GameUnit Target { get; set; }
@@ -27,7 +26,6 @@ public class TestRocket : MonoBehaviour
 
         while (elapsedTime < _duration)
         {
-            Debug.Log("Вылетел");
             transform.Translate(Vector3.forward * _speed * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -35,7 +33,6 @@ public class TestRocket : MonoBehaviour
 
         while (Target != null)
         {
-            Debug.Log("Направляюсь к цели");
             Vector3 direction = (Target.transform.position - transform.position).normalized;
             transform.position += direction * _speed * Time.deltaTime;
 

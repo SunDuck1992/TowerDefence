@@ -13,6 +13,5 @@ public class DieMashineGunTowerState : BaseState<MashineGunTower>
     public override void Exit()
     {
         Owner.DiedComplete.Invoke(Owner as Tower);
-        Debug.Log(Owner.name + " - IN DIE STATE");
     }
 }

@@ -5,6 +5,8 @@ public class PlayerWalletInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<PlayerWallet>().AsSingle();
+        var playerWallet = new PlayerWallet();
+
+        Container.Bind<PlayerWallet>().FromInstance(playerWallet).AsSingle();
     }
 }

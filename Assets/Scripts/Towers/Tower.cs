@@ -44,17 +44,14 @@ public abstract class Tower : GameUnit, IStateMachineOwner
 
     public virtual void Enable()
     {
-        //StateMachine.SwitchState<IdleTowerState, MashineGunTower>(this);
     }
 
     public void Disable()
     {
-
     }
 
     public virtual void Die()
     {
-        //StateMachine.SwitchState<DieTowerState, Tower>(this);
     }
 
     public void ImproveDamage(int level)

@@ -33,7 +33,6 @@ public class BuildArea : MonoBehaviour
     public Transform BuildPoint => _buildPoint;
     public Tower CurrentTower => _currentTower;
     public bool OnBuild { get; set; }
-    //public int TowerType {  get; set; }
     public BuildTowersSystem BuildTowersSystem { get; set; }
     public int WaveLevel => _waveLevel;
     public int ImproveLevel => _improveLevel;
@@ -49,7 +48,7 @@ public class BuildArea : MonoBehaviour
 
     private void Start()
     {
-        if(YandexGame.savesData.UpgradeLevelTower != -1)
+        if (YandexGame.savesData.UpgradeLevelTower != -1)
         {
             _improveLevel = YandexGame.savesData.UpgradeLevelTower;
         }
@@ -69,8 +68,6 @@ public class BuildArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _isEnter = false;
-
         StopFilling();
 
         if (_coroutine != null)
@@ -79,7 +76,11 @@ public class BuildArea : MonoBehaviour
             _coroutine = null;
         }
 
-        BuildTowersSystem.OnDeInteractBuildArea();
+        if (_isEnter)
+        {
+            BuildTowersSystem.OnDeInteractBuildArea();
+            _isEnter = false;
+        }   
     }
 
     public void SetCurrentTower(Tower tower)
@@ -89,14 +90,12 @@ public class BuildArea : MonoBehaviour
 
     public void DestroyCurrentTower()
     {
-        Debug.Log(_currentTower.name);
         _currentTower.DiedStart?.Invoke(_currentTower);
-
     }
 
     public void IncreaseImproveLevel()
     {
-        if(YandexGame.savesData.UpgradeLevelTower == -1)
+        if (YandexGame.savesData.UpgradeLevelTower == -1)
         {
             _improveLevel++;
             YandexGame.savesData.UpgradeLevelTower = _improveLevel;
@@ -112,7 +111,7 @@ public class BuildArea : MonoBehaviour
     {
         _sliderImage.fillAmount = 0;
 
-        _sliderImage.DOFillAmount(1f, _fillDuration).OnComplete(() =>
+        _sliderImage.DOFillAmount(1f, _fillDuration).OnKill(() =>
         {
             BuildTowersSystem.OnInteractBuildArea(this);
             StopCoroutine(_coroutine);

@@ -18,7 +18,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private float _changeDamageValue;
 
     private int _maxIncreaseFirerateLevel = 5;
-    private int _maxIncreaseDamageLevel = 5;
+    private int _maxIncreaseDamageLevel = 10;
 
     public Transform WeaponPoint => _weaponPoint;
     public float FireRate => _firerate;
@@ -39,7 +39,6 @@ public abstract class Weapon : MonoBehaviour
     }
 
     public void Activate()
-
     {
         gameObject.SetActive(true);
         _IKControls.enabled = true;
@@ -58,18 +57,13 @@ public abstract class Weapon : MonoBehaviour
         if (_maxIncreaseFirerateLevel >= UpgradeLevelValue)
         {
             firerate = _firerate - (_changeFirerateValue * UpgradeLevelValue);
-            Debug.LogWarning(firerate + " - firerate   Weapon");
         }
         else
         {
             firerate = _firerate - (_maxIncreaseFirerateLevel * _changeFirerateValue);
             MaxLevelIncreased?.Invoke();
-            //Debug.Log(_maxIncreaseFirerateLevel + " - maxIncreaseLevel, " + UpgradeLevelValue + " - UpgradeLevel");
-            //Debug.Log("MaxLevelIncreased");
         }
-
-        //YandexGame.savesData.weaponSpeed = firerate;
-
+        
         return firerate;
     }
 
@@ -80,17 +74,12 @@ public abstract class Weapon : MonoBehaviour
         if (_maxIncreaseDamageLevel >= UpgradeLevelValue)
         {
             damage = _damage + (_changeDamageValue * UpgradeLevelValue);
-            Debug.LogWarning(damage + " - damage  Weapon");
         }
         else
         {
             damage = _damage + (_maxIncreaseDamageLevel * _changeDamageValue);
             MaxLevelIncreased?.Invoke();
-            //Debug.Log(_maxIncreaseFirerateLevel + " - maxIncreaseLevel, " + UpgradeLevelValue + " - UpgradeLevel");
-            //Debug.Log("MaxLevelIncreased");
         }
-
-        //YandexGame.savesData.weaponDamage = damage;
 
         return damage;
     }

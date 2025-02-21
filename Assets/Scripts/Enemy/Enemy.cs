@@ -47,7 +47,6 @@ public class Enemy : GameUnit, IStateMachineOwner
         StateMachine.SwitchState<EnemyIdleState, Enemy>(this);
         ResetHealth();
         TargetController.AddTarget(this);
-        Debug.Log($"Создан моб: {this.GetInstanceID()}, Аниматор: {Animator.GetInstanceID()}");
     }
 
     public void ImproveCharacteristic(float health, float damage)

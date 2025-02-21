@@ -29,7 +29,7 @@ public class BuildTowersSystem
         {
             sceneSettings.BuildPoints[i].BuildTowersSystem = this;
         }
-        
+
         TowerSettings = towerSettings;
         _targetController = targetController;
         _bulletPool = bulletPool;
@@ -47,7 +47,7 @@ public class BuildTowersSystem
 
         _rocketPool = rocketPool;
         _targetController.AddTarget(sceneSettings.Base, true);
-        _allTowers.Add(sceneSettings.Base); // временно
+        _allTowers.Add(sceneSettings.Base);
     }
 
     ~BuildTowersSystem()
@@ -66,7 +66,6 @@ public class BuildTowersSystem
     {
         _currentBuildArea = buildArea;
         InteractBuildArea?.Invoke(buildArea);
-        Debug.LogWarning(_currentBuildArea);
     }
 
     public void OnDeInteractBuildArea()
@@ -79,7 +78,6 @@ public class BuildTowersSystem
     {
         if (_currentBuildArea == null)
         {
-            Debug.LogWarning(" _currentBuildArea is null");
             return;
         }
 
@@ -98,12 +96,9 @@ public class BuildTowersSystem
         _targetController.AddTarget(tower, true);
         tower.DiedComplete.AddListener(Destroy);
         _towerBuild = tower;
-        
+
         _towerAreaLocations.Add(_currentBuildArea, tower);
-
-        _allTowers.Add(tower); // временно
-
-        Debug.Log(_towerAreaLocations.Count + " - количество зон в листе");
+        _allTowers.Add(tower);
     }
 
     public Tower GetBuildTower()
@@ -118,14 +113,17 @@ public class BuildTowersSystem
 
     private void RepairTowers(int cost)
     {
-        if (_playerWallet.TrySpendGem(cost))             // временное решение ? а может и нет
+        if (_playerWallet.TrySpendGem(cost))
         {
             for (int i = 0; i < _allTowers.Count; i++)
             {
-                var tower = _allTowers[i];
+                if (_allTowers[i].gameObject.activeSelf)
+                {
+                    var tower = _allTowers[i];
 
-                tower.ResetHealth();
-                tower.EnableHealParticle();
+                    tower.ResetHealth();
+                    tower.EnableHealParticle();
+                }
             }
         }
     }
@@ -143,19 +141,18 @@ public class BuildTowersSystem
     {
         gameUnit.DiedComplete.RemoveAllListeners();
 
-        if(gameUnit is Tower tower)
+        if (gameUnit is Tower tower)
         {
             BuildArea buildArea = tower.BuildArea;
 
-            if(buildArea != null)
+            if (buildArea != null)
             {
                 buildArea.OnBuild = false;
                 _towerAreaLocations.Remove(buildArea);
             }
         }
 
-        //DestroedTower?.Invoke();
         _targetController.RemoveTarget(gameUnit);
-        gameUnit.gameObject.SetActive(false);  // временное решение, пока не добавлен пулл        
+        gameUnit.gameObject.SetActive(false);
     }
 }
