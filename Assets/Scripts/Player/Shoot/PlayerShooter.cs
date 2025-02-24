@@ -6,7 +6,8 @@ using Zenject;
 
 public class PlayerShooter : MonoBehaviour
 {
-    public const float Radius = 7f;
+    public const float Radius = 6f;
+    public const float ShootDistance = 10f;
 
     [SerializeField] private Animator _weaponAnimator;
     [SerializeField] private List<Weapon> _weapons;
@@ -27,6 +28,7 @@ public class PlayerShooter : MonoBehaviour
     private TargetController _targetController;
     private PlayerWallet _playerWallet;
     private float _couldown;
+    private float _currentDistance;
 
     public Weapon CurrentWeapon { get; private set; }
     public bool IsShooting { get; private set; }
@@ -93,6 +95,11 @@ public class PlayerShooter : MonoBehaviour
             rotate.y = 0;
             _rotate.Direction = rotate;
             _rotate.IsShooting = true;
+            _currentDistance = Vector3.Distance(_target.transform.position, gameObject.transform.position);
+        }
+        else
+        {
+            _currentDistance = 20f;
         }
     }
 
@@ -100,21 +107,26 @@ public class PlayerShooter : MonoBehaviour
     {
         while (true)
         {
-            _target = _targetController.GetTarget(_self, 10, true);
+            _target = _targetController.GetTarget(_self, 16, true);
+
             if (_target != null)
             {
-                for (int i = 0; i < CurrentWeapon.CountBullet; i++)
+                if(_currentDistance < ShootDistance)
                 {
-                    Bullet bullet = _bulletPool.Spawn();
-                    bullet.Hit += OnHit;
-                    bullet.Died += BulletComplete;
+                    IsShooting = true;
 
-                    CurrentWeapon.Shoot(bullet);
-                }
+                    for (int i = 0; i < CurrentWeapon.CountBullet; i++)
+                    {
+                        Bullet bullet = _bulletPool.Spawn();
+                        bullet.GetTargetPosition(_target);
+                        bullet.Hit += OnHit;
+                        bullet.Died += BulletComplete;
 
-                IsShooting = true;
+                        CurrentWeapon.Shoot(bullet);
+                    }
 
-                yield return new WaitForSeconds(_couldown);
+                    yield return new WaitForSeconds(_couldown);
+                }               
             }
             else
             {
@@ -150,6 +162,8 @@ public class PlayerShooter : MonoBehaviour
 
     private void OnHit(Enemy enemy)
     {
+        Debug.LogWarning("Я попала - пуля");
+
         if (_isMassiveDamage)
         {
             var enemies = _targetController.GetAllTargets(enemy, Radius, true);

@@ -44,7 +44,7 @@ namespace YG
 
         public List<bool> weaponsIsBuyed = new List<bool>(new bool[3]);
 
-        public List<BuildArea> buildAreas = new List<BuildArea>();
+        //public List<BuildArea> buildAreas = new List<BuildArea>();
         public List<BuildedAreaInfo> buildedAreas = new List<BuildedAreaInfo>();
         //public List<int> towersType = new List<int>();
         //public List<BuildedAreaInfo> buildedAreaInfos = new List<BuildedAreaInfo>();
@@ -69,8 +69,7 @@ namespace YG
         public string name; // Изменено на поле
         public int value;   // Изменено на поле
         public bool isBuilded;
-
-        public int improveLevel = 1;
+        public int improveLevel = -1;
 
         // Пустой конструктор для сериализации
         public BuildedAreaInfo() { }

@@ -25,6 +25,7 @@ public class ShootRocketTowerState : BaseState<RocketTower>
 
     private void OnHit(Enemy enemy)
     {
+        //Debug.LogWarning("Я попала - ракета!");
         enemy.TakeDamage(_rocket.Damage);
 
         var enemies = enemy.TargetController.GetAllTargets(enemy, 3f, true);

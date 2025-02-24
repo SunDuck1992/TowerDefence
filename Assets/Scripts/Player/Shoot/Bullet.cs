@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private ParticleSystem _hitBulletParticle;
 
+    private Transform _targetPosition;
+
     public float Damage { get; set; }
 
     public event Action<Bullet> Died;
@@ -17,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("SelfDestraction", 5f);
+        //Invoke("SelfDestraction", 5f);
     }
 
     private void OnDisable()
@@ -27,7 +29,17 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
+        Debug.LogWarning(_targetPosition.position + " - targetpositon");
+
+        //Vector3 direction = (_targetPosition.position - transform.position);
+
         transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+
+        float targetY = _targetPosition.position.y;
+        float smoothY = Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * _speed);
+        Vector3 newPosition = transform.position;
+        newPosition.y = smoothY; 
+        transform.position = newPosition; 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,6 +54,12 @@ public class Bullet : MonoBehaviour
             HitTower?.Invoke(enemy);
             Died?.Invoke(this);
         }
+    }
+
+    public void GetTargetPosition(GameUnit target)
+    {
+        var enemyTarget = target as Enemy;
+        _targetPosition = enemyTarget.BulletTarget;
     }
 
     private void OnDrawGizmos()

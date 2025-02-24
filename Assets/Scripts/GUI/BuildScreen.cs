@@ -35,7 +35,6 @@ public class BuildScreen : MonoBehaviour
     private Tower _tower;
     private Sprite _currentSprite;
     private float _duration = 2f;
-    //private string _needMoreGoldText = "Need more gold";
     private bool[] _isCoroutineRunning = new bool[5];
 
     [Inject]
@@ -105,8 +104,33 @@ public class BuildScreen : MonoBehaviour
                 _tower = _buildTowerSystem.GetBuildTower();
                 _buildTowerSystem.CurrentBuildArea.SetCurrentTower(_tower);
                 _currentSprite = _buildTowerSystem.TowerSettings.Datas[index].Sprite;
-                YandexGame.savesData.buildAreas.Add(_buildTowerSystem.CurrentBuildArea);
-                YandexGame.savesData.buildedAreas.Add(new BuildedAreaInfo(_buildTowerSystem.CurrentBuildArea.name, index, true));
+                //YandexGame.savesData.buildAreas.Add(_buildTowerSystem.CurrentBuildArea);
+
+                if (YandexGame.savesData.buildedAreas.Count == 0)
+                {
+                    YandexGame.savesData.buildedAreas.Add(new BuildedAreaInfo(_buildTowerSystem.CurrentBuildArea.name, index, true));
+                }
+                else
+                {
+                    bool areaFound = false;
+
+                    for (int i = 0; i < YandexGame.savesData.buildedAreas.Count; i++)
+                    {
+                        if (YandexGame.savesData.buildedAreas[i].name == _buildTowerSystem.CurrentBuildArea.name)
+                        {
+                            YandexGame.savesData.buildedAreas[i].isBuilded = true;
+                            YandexGame.savesData.buildedAreas[i].value = index;
+                            areaFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!areaFound)
+                    {
+                        YandexGame.savesData.buildedAreas.Add(new BuildedAreaInfo(_buildTowerSystem.CurrentBuildArea.name, index, true));
+                    }
+                }
+
             }
             else
             {
@@ -126,6 +150,14 @@ public class BuildScreen : MonoBehaviour
             if (_playerWallet.TrySpendGold(_destroycost))
             {
                 _buildTowerSystem.CurrentBuildArea.DestroyCurrentTower();
+
+                for (int i = 0; i < YandexGame.savesData.buildedAreas.Count; i++)
+                {
+                    if (YandexGame.savesData.buildedAreas[i].name == _buildTowerSystem.CurrentBuildArea.name)
+                    {
+                        YandexGame.savesData.buildedAreas[i].isBuilded = false;
+                    }
+                }
             }
             else
             {
@@ -146,7 +178,7 @@ public class BuildScreen : MonoBehaviour
         {
             if (_playerWallet.TrySpendGold(_improveCost))
             {
-                _buildTowerSystem.CurrentBuildArea.IncreaseImproveLevel();
+                _buildTowerSystem.CurrentBuildArea.IncreaseImproveLevel(_buildTowerSystem);
                 tower.ImproveDamage(_buildTowerSystem.CurrentBuildArea.ImproveLevel);
                 _improveLevelText.text = _buildTowerSystem.CurrentBuildArea.ImproveLevel.ToString();
             }
@@ -159,8 +191,8 @@ public class BuildScreen : MonoBehaviour
                 }
             }
         }
-        
-        if(_buildTowerSystem.CurrentBuildArea.ImproveLevel == _buildTowerSystem.CurrentBuildArea.MaxImproveLevel)
+
+        if (_buildTowerSystem.CurrentBuildArea.ImproveLevel == _buildTowerSystem.CurrentBuildArea.MaxImproveLevel)
         {
             _increaseButton.interactable = false;
         }
@@ -180,7 +212,7 @@ public class BuildScreen : MonoBehaviour
             _currentImage.sprite = _currentSprite;
             _improveLevelText.text = _buildTowerSystem.CurrentBuildArea.ImproveLevel.ToString();
 
-            if(_buildTowerSystem.CurrentBuildArea.ImproveLevel < _buildTowerSystem.CurrentBuildArea.MaxImproveLevel)
+            if (_buildTowerSystem.CurrentBuildArea.ImproveLevel < _buildTowerSystem.CurrentBuildArea.MaxImproveLevel)
             {
                 _increaseButton.interactable = true;
             }

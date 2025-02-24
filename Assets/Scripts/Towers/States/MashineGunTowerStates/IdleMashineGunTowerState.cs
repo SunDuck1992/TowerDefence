@@ -13,7 +13,7 @@ public class IdleMashineGunTowerState : BaseState<MashineGunTower>
         if (target != null)
         {
             Vector3 direction = target.transform.position - Owner.transform.position;
-            Vector3 rotation = Quaternion.Lerp(Owner.TransformTower.rotation, Quaternion.LookRotation(direction), 10 * Time.deltaTime).eulerAngles;
+            Vector3 rotation = Quaternion.Lerp(Owner.TransformTower.rotation, Quaternion.LookRotation(direction), 15 * Time.deltaTime).eulerAngles;
             rotation.x = 0;
             rotation.z = 0;
 
@@ -21,7 +21,7 @@ public class IdleMashineGunTowerState : BaseState<MashineGunTower>
 
             float angle = Vector3.Angle(Owner.TransformTower.forward, direction.normalized);
 
-            if (angle <= 5f)
+            if (angle <= 2f)
             {
                 Owner.StateMachine.SwitchState<ShootMashineGunTowerState, MashineGunTower>(Owner, state => state.target = target);
             }

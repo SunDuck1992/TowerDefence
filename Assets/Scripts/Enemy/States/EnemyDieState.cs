@@ -43,6 +43,7 @@ public class EnemyDieState : BaseState<Enemy>
     public override void Exit()
     {
         Owner.DiedComplete.Invoke(Owner);
+        Owner.SwitchFreezePartical(false);
 
         if (Owner.Target != null && Owner.TargetAttackPoint != null)
         {

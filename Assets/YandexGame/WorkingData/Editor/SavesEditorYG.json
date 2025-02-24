@@ -1,5 +1,5 @@
 {
-    "idSave": 14,
+    "idSave": 128,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -10,32 +10,20 @@
         true,
         false
     ],
-    "leaderScore": 39,
-    "gold": 1320,
-    "gem": 2,
-    "waveCount": 3,
-    "enemyCount": 6,
-    "upgradeDamageLevel": 3,
-    "upgradeSpeedWeaponLevel": -1,
+    "leaderScore": 156,
+    "gold": 4500,
+    "gem": 3,
+    "waveCount": 12,
+    "enemyCount": 15,
+    "upgradeDamageLevel": 10,
+    "upgradeSpeedWeaponLevel": 2,
     "upgradeHealthLevel": -1,
-    "weaponIndex": 1,
+    "weaponIndex": 2,
     "UpgradeLevelTower": -1,
     "weaponsIsBuyed": [
         true,
         true,
-        false
+        true
     ],
-    "buildAreas": [
-        {
-            "instanceID": 300106
-        }
-    ],
-    "buildedAreas": [
-        {
-            "name": "BuildArea",
-            "value": 0,
-            "isBuilded": true,
-            "improveLevel": 1
-        }
-    ]
+    "buildedAreas": []
 }

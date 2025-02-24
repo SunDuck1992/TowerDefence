@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using YG;
+using Zenject;
 
 public class BuildArea : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class BuildArea : MonoBehaviour
     private Transform _canvasTransform;
     private Coroutine _coroutine;
     private Tower _currentTower;
+    private SceneSettings _sceneSettings;
 
     private bool _isEnter;
 
@@ -38,6 +40,13 @@ public class BuildArea : MonoBehaviour
     public int ImproveLevel => _improveLevel;
     public int MaxImproveLevel => _maxImproveLevel;
 
+    [Inject]
+    public void Construct(SceneSettings sceneSettings)
+    {
+        _sceneSettings = sceneSettings;
+    }
+
+
     private void Awake()
     {
         _canvas = GetComponentInChildren<Canvas>();
@@ -48,6 +57,20 @@ public class BuildArea : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < YandexGame.savesData.buildedAreas.Count; i++)
+        {
+            for (int j = 0; j < _sceneSettings.BuildPoints.Count; j++)
+            {
+                if (YandexGame.savesData.buildedAreas[i].name == _sceneSettings.BuildPoints[j].name)
+                {
+                    if (YandexGame.savesData.buildedAreas[i].improveLevel != -1)
+                    {
+                        _sceneSettings.BuildPoints[j]._improveLevel = YandexGame.savesData.buildedAreas[i].improveLevel;
+                    }
+                }
+            }
+        }
+
         if (YandexGame.savesData.UpgradeLevelTower != -1)
         {
             _improveLevel = YandexGame.savesData.UpgradeLevelTower;
@@ -80,7 +103,7 @@ public class BuildArea : MonoBehaviour
         {
             BuildTowersSystem.OnDeInteractBuildArea();
             _isEnter = false;
-        }   
+        }
     }
 
     public void SetCurrentTower(Tower tower)
@@ -93,17 +116,26 @@ public class BuildArea : MonoBehaviour
         _currentTower.DiedStart?.Invoke(_currentTower);
     }
 
-    public void IncreaseImproveLevel()
+    public void IncreaseImproveLevel(BuildTowersSystem buildTowersSystem)
     {
-        if (YandexGame.savesData.UpgradeLevelTower == -1)
+        for (int i = 0; i < YandexGame.savesData.buildedAreas.Count; i++)
         {
-            _improveLevel++;
-            YandexGame.savesData.UpgradeLevelTower = _improveLevel;
-        }
-        else
-        {
-            _improveLevel++;
-            YandexGame.savesData.UpgradeLevelTower++;
+            if (YandexGame.savesData.buildedAreas[i].name == buildTowersSystem.CurrentBuildArea.name)
+            {
+                if (YandexGame.savesData.buildedAreas[i].improveLevel == -1)
+                {
+                    _improveLevel++;
+                    YandexGame.savesData.buildedAreas[i].improveLevel = _improveLevel;
+                }
+                else
+                {
+                    if (_improveLevel < _maxImproveLevel)
+                    {
+                        _improveLevel++;
+                        YandexGame.savesData.buildedAreas[i].improveLevel++;
+                    }
+                }
+            }
         }
     }
 

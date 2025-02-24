@@ -18,6 +18,7 @@ public class Enemy : GameUnit, IStateMachineOwner
     [SerializeField] private int _award;
     [SerializeField] private Transform _deathParticlePoint;
     [SerializeField] private Transform _hitParticlePoint;
+    [SerializeField] private Transform _bulletTarfet;
     [SerializeField] private ParticleSystem _deathParticle;
     [SerializeField] private ParticleSystem _hitParticle;
     [SerializeField] private GameObject _freezePartical;
@@ -27,6 +28,7 @@ public class Enemy : GameUnit, IStateMachineOwner
     public GameUnit Target { get; set; }
     public Transform TargetAttackPoint { get; set; }
     public Transform DeathParticlePoint => _deathParticlePoint;
+    public Transform BulletTarget => _bulletTarfet;
     public NavMeshAgent Agent => _agent;
     public Animator Animator => _animator;
     public AnimationEventListener Listener => _listener;

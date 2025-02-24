@@ -13,6 +13,5 @@ public class MashineGunTower : Tower
     public override void Die()
     {
         StateMachine.SwitchState<DieMashineGunTowerState, MashineGunTower>(this);
-        Debug.Log(this.name);
     }
 }

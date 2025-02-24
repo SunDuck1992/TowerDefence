@@ -118,6 +118,37 @@ MonoBehaviour:
   _gameUnit: {fileID: 6757149698265665325}
   _slider: {fileID: 2916318420280594987}
   _isHideble: 1
+--- !u!1 &3724121092049513181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9117604277439165930}
+  m_Layer: 9
+  m_Name: BulletTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9117604277439165930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3724121092049513181}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.018, y: 0.804, z: 0.241}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6020184449214357357}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5444962217393813603
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +225,7 @@ GameObject:
   - component: {fileID: 6911536393187532318}
   - component: {fileID: 6388315687430256532}
   - component: {fileID: 8438821926467846312}
+  - component: {fileID: 7068411956205967114}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -219,6 +251,7 @@ Transform:
   - {fileID: 4756780899119643166}
   - {fileID: 5782468066405166899}
   - {fileID: 146162212559125371}
+  - {fileID: 9117604277439165930}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6757149698265665325
@@ -261,6 +294,7 @@ MonoBehaviour:
   _award: 20
   _deathParticlePoint: {fileID: 4756780899119643166}
   _hitParticlePoint: {fileID: 146162212559125371}
+  _bulletTarfet: {fileID: 9117604277439165930}
   _deathParticle: {fileID: 4544945786045599424, guid: 3e36cd98b6368784fb4d659e48c6f887, type: 3}
   _hitParticle: {fileID: 1460296630926518430, guid: bfa9777543ea20549be50a25d75b87c9, type: 3}
   _freezePartical: {fileID: 4255009308854995203}
@@ -303,12 +337,12 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1.5
+  m_Radius: 0.514571
+  m_Height: 1.9564761
   m_Direction: 1
-  m_Center: {x: 0, y: 0.75, z: 0}
+  m_Center: {x: 0.008313894, y: 0.97823805, z: 0}
 --- !u!114 &6388315687430256532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +387,27 @@ MonoBehaviour:
   - {fileID: 363356619179823720}
   - {fileID: 8185477786971289827}
   - {fileID: 3679263582594012802}
+--- !u!65 &7068411956205967114
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926246682243619414}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0674987, y: 1.7702659, z: 0.9787438}
+  m_Center: {x: -0.008948505, y: 0.7837822, z: 0.007761121}
 --- !u!1001 &344146873377605224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -880,7 +935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2547592989191186923, guid: 5de81f6866c59ec40933b8d05648a2e2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2600565647660439249, guid: 5de81f6866c59ec40933b8d05648a2e2, type: 3}
       propertyPath: m_Layer
@@ -1377,6 +1432,10 @@ PrefabInstance:
     - target: {fileID: 8360728827090998784, guid: 5de81f6866c59ec40933b8d05648a2e2, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413626974017794995, guid: 5de81f6866c59ec40933b8d05648a2e2, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8540470739552086971, guid: 5de81f6866c59ec40933b8d05648a2e2, type: 3}
       propertyPath: m_Layer

@@ -17,6 +17,7 @@ public abstract class Tower : GameUnit, IStateMachineOwner
 
     private float _improveDamage = 0.3f;
     private float _currentDamage;
+    private ParticleSystem _particle;
   
     public float ShootDistance => _shootDistance;
     public Transform TransformTower => _transformTower;
@@ -25,7 +26,7 @@ public abstract class Tower : GameUnit, IStateMachineOwner
     public float Damage => _currentDamage;
     public float FireRate => _fireRate;
 
-    public IStateMachine StateMachine { get; private set; }
+    public IStateMachine StateMachine { get; set; }
     public TargetController TargetController { get; set; }
     public BulletPool BulletPool { get; set; }
     public RocketPool RocketPool { get; set; }
@@ -61,11 +62,17 @@ public abstract class Tower : GameUnit, IStateMachineOwner
 
     public void EnableHealParticle()
     {
-        ParticleSystem particle = Instantiate(_healParticle, _healParticalPoint.position, Quaternion.identity);
-        particle.transform.localScale = _healParticalPoint.localScale;
-        particle.transform.rotation = _healParticalPoint.rotation;
-        StartCoroutine(DestroyParticleAfterDelay(particle, 3f));
+         _particle = Instantiate(_healParticle, _healParticalPoint.position, Quaternion.identity);
+        _particle.transform.localScale = _healParticalPoint.localScale;
+        _particle.transform.rotation = _healParticalPoint.rotation;
+        StartCoroutine(DestroyParticleAfterDelay(_particle, 3f));
     }
+
+    //public void DisableHealParticle()
+    //{
+    //    Destroy(_particle);
+    //    _particle.gameObject.SetActive(false); 
+    //}
 
     public void CreateShootparticle()
     {
